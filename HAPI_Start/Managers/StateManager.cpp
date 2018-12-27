@@ -1,6 +1,6 @@
 #include "StateManager.h"
-#include "StateMainMenu.h"
-#include "StateGame.h"
+#include "../States/StateGame.h"
+#include "../States/StateMainMenu.h"
 #include <algorithm>
 
 //StateFacotry

@@ -19,35 +19,46 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ComponentBase.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Components\ComponentDrawable.cpp" />
+    <ClCompile Include="Components\ComponentMovable.cpp" />
+    <ClCompile Include="Components\ComponentPosition.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Managers\EntityManager.cpp" />
+    <ClCompile Include="Managers\StateManager.cpp" />
+    <ClCompile Include="Managers\TextureManager.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="StateGame.cpp" />
-    <ClCompile Include="StateMainMenu.cpp" />
-    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="States\StateGame.cpp" />
+    <ClCompile Include="States\StateMainMenu.cpp" />
+    <ClCompile Include="Managers\SystemManager.cpp" />
+    <ClCompile Include="Systems\SystemDrawable.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentBase.h" />
-    <ClInclude Include="ComponentDrawable.h" />
-    <ClInclude Include="ComponentPosition.h" />
-    <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="Allocate.h" />
+    <ClInclude Include="Components\ComponentDrawable.h" />
+    <ClInclude Include="Components\ComponentMovable.h" />
+    <ClInclude Include="Components\ComponentPosition.h" />
+    <ClInclude Include="Components\ComponentType.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EntityName.h" />
+    <ClInclude Include="Managers\EntityManager.h" />
+    <ClInclude Include="Managers\StateManager.h" />
+    <ClInclude Include="Managers\TextureManager.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="StateBase.h" />
-    <ClInclude Include="StateGame.h" />
-    <ClInclude Include="StateMainMenu.h" />
-    <ClInclude Include="StateManager.h" />
-    <ClInclude Include="StateType.h" />
+    <ClInclude Include="States\StateBase.h" />
+    <ClInclude Include="States\StateGame.h" />
+    <ClInclude Include="States\StateMainMenu.h" />
+    <ClInclude Include="States\StateType.h" />
+    <ClInclude Include="Managers\SystemManager.h" />
+    <ClInclude Include="Systems\SystemDrawable.h" />
+    <ClInclude Include="Systems\SystemBase.h" />
+    <ClInclude Include="Systems\SystemMessage.h" />
+    <ClInclude Include="Systems\SystemType.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2f.h" />
     <ClInclude Include="Vector2i.h" />

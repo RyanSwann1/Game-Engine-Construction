@@ -1,10 +1,10 @@
 #pragma once
 
 #include <unordered_map>
-#include "Vector2i.h"
+#include "../Vector2i.h"
 #include <string>
 #include <HAPI_lib.h>
-#include "Texture.h"
+#include "../Texture.h"
 
 using namespace HAPISPACE;
 
@@ -16,6 +16,7 @@ public:
 		static TextureManager textureManager;
 		return textureManager;
 	}
+
 	TextureManager(const TextureManager&) = delete;
 	TextureManager& operator=(const TextureManager&) = delete;
 	TextureManager(TextureManager&&) = delete;

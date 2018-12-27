@@ -1,12 +1,11 @@
 #include "TextureManager.h"
 #include <utility>
 #include <cassert>
-#include "Utilities.h"
+#include "../Utilities.h"
 
 TextureManager::TextureManager()
 	: m_textures()
-{
-}
+{}
 
 void TextureManager::loadTexture(std::string&& name)
 {

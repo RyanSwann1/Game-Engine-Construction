@@ -1,6 +1,6 @@
 #include "Sprite.h"
 #include "HAPI_lib.h"
-#include "TextureManager.h"
+#include "../Managers/TextureManager.h"
 #include "Texture.h"
 #include "Window.h"
 

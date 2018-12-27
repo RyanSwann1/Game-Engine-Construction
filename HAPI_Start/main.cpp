@@ -4,9 +4,13 @@
 #include "Utilities.h"
 #include "Window.h"
 #include "Sprite.h"
-#include "TextureManager.h"
-#include "StateManager.h"
-
+#include "Managers/TextureManager.h"
+#include "Managers/StateManager.h"
+#include "Managers/EntityManager.h"
+#include "Components/ComponentPosition.h"
+#include "Managers/SystemManager.h"
+#include <iostream>
+#include "Allocate.h"
 
 //Source space == Texture
 //Destinatipon Space == Screen
@@ -17,6 +21,8 @@ void gameLoop(Sprite& playerSprite, Window& window, int spriteMovementSpeed);
 void handleSpriteMovement(Sprite& playerSprite, Vector2i windowSize, int spriteMovementSpeed);
 float getDeltaTime(DWORD lastFrameStart, DWORD frameStart);
 
+//https://www.youtube.com/watch?v=0MdSJsCTRkY
+
 void HAPI_Main()
 {
 	Window* window = Window::create("HAPI_WINDOW", Vector2i(1028, 720));
@@ -25,21 +31,36 @@ void HAPI_Main()
 		Utilities::displayErrorMessage("Failed to initialize HAPI.");
 		return;
 	}
-	
+
 	//TextureManager textureManager;
 	//textureManager.loadTexture("playerSprite.tga");
 	//Sprite playerSprite("playerSprite.tga", textureManager, Vector2i(150, 150), Vector2i(100, 100));
-	const int spriteMovementSpeed = 3;
-	StateManager stateManager;
-	stateManager.switchToState(StateType::MainMenu);
-	stateManager.switchToState(StateType::Game);
-	
+
+
+	//std::cout << "MAKE UNIQUE\n";
+	//std::vector<std::unique_ptr<Test>> tests;
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//tests.emplace_back(std::make_unique<Test>());
+	//for (const auto& test : tests)
+	//{
+	//	std::cout << &test << "\n";
+	//}
+
+	EntityManager entityManager;
+
+	auto& m = SystemManager::getInstance();
+
 	int i = 0;
-	stateManager.removeState(StateType::Game);
-	stateManager.removeState(StateType::MainMenu);
-	stateManager.update();
-	int x = 0;
-	//gameLoop(playerSprite, *window, spriteMovementSpeed);
 
 	delete window;
 }
