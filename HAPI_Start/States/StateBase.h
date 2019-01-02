@@ -2,6 +2,7 @@
 
 #include "StateType.h"
 
+class Window;
 class StateManager;
 class StateBase
 {
@@ -10,15 +11,15 @@ public:
 		: m_stateManager(stateManager),
 		m_stateType(stateType)
 	{}
-
 	StateBase(const StateBase&) = delete;
 	StateBase& operator=(const StateBase&) = delete;
 	StateBase(StateBase&&) = delete;
 	StateBase&& operator=(StateBase&&) = delete;
 
 	StateType getType() const { return m_stateType; }
-	virtual void draw() const = 0;
+	
 	virtual void update() = 0;
+	virtual void draw(const Window& window) const = 0;
 	
 private:
 	StateManager& m_stateManager;

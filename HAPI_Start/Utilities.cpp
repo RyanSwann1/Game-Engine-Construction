@@ -2,6 +2,7 @@
 #include <random>
 #include "HAPI_lib.h"
 #include "Vector2i.h"
+#include "EntityName.h"
 
 std::string Utilities::getDataDirectory()
 {
@@ -10,8 +11,8 @@ std::string Utilities::getDataDirectory()
 
 int Utilities::getRandomNumber(int min, int max)
 {
-	static std::random_device rd;  //Will be used to obtain a seed for the random number engine
-	static std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	static std::random_device rd;  
+	static std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(min, max);
 
 	return dis(gen);
@@ -30,4 +31,26 @@ void Utilities::removeFPSIndicator()
 void Utilities::displayErrorMessage(const std::string & message)
 {
 	HAPI.UserMessage(message, "Error!");
+}
+
+std::string Utilities::convertEntityName(EntityName entityName)
+{
+	switch (entityName)
+	{
+	case EntityName::Player :
+	{
+		return std::string("Player");
+		break;
+	}
+	case EntityName::Projectile :
+	{
+		return std::string("Projectile");
+		break;
+	}
+	case EntityName::Enemy :
+	{
+		return std::string("Enemy");
+		break;
+	}
+	}
 }

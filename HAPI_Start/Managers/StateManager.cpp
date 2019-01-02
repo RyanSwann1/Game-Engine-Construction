@@ -70,13 +70,13 @@ void StateManager::update()
 	handleRemovals();
 }
 
-void StateManager::draw() const
+void StateManager::draw(const Window& window) const
 {
 	assert(!m_states.empty());
 
 	for (const auto& state : m_states)
 	{
-		state->draw();
+		state->draw(window);
 	}
 }
 
@@ -91,7 +91,6 @@ void StateManager::handleRemovals()
 
 	m_removals.clear();
 }
-
 
 bool StateManager::isStateActive(StateType stateType) const
 {

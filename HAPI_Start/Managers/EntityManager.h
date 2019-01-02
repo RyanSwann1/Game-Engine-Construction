@@ -8,9 +8,11 @@
 #include <assert.h>
 #include "../Entity.h"
 #include "../Components/ComponentType.h"
+#include "../Vector2i.h"
 
 constexpr size_t MAX_ENTITIES = 100;
 constexpr int ENTITY_NOT_IN_USE = -1;
+constexpr int PLAYER_ID = 0;
 
 class EntityManager
 {
@@ -41,10 +43,19 @@ public:
 	EntityManager(EntityManager&&) = delete;
 	EntityManager&& operator=(EntityManager&&) = delete;
 
-	void addEntity(EntityName name);
+	const Entity& getEntity(int entityID) const;
+
+	void addEntity(EntityName name, Vector2i startingPosition);
 	void removeEntity(int entityID);
+	void update();
 
 private:
 	EntityFactory m_entityFactory;
+	std::vector<std::pair<EntityName, Vector2i>> m_entitiesToAdd;
 	std::vector<Entity*> m_entities;
+	std::vector<int> m_entitiesToRemove;
+	
+	void handleEntityRemovals();
+	void handleEntityAdditions();
+
 };

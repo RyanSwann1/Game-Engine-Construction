@@ -12,7 +12,7 @@ public:
 	StateMainMenu&& operator=(StateMainMenu&&) = delete;
 
 	void update() override;
-	void draw() const override;
+	void draw(const Window& window) const override;
 
 
 };

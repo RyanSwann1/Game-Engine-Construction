@@ -9,16 +9,17 @@ class Window;
 class Sprite
 {
 public:
-	Sprite(const std::string& textureName, TextureManager& textureManager, Vector2i size, Vector2i startingPosition);
+	Sprite();
 
 	const Texture& getTexture() const;
 	Vector2i getPosition() const;
+	void setTexture(const std::string& name);
 
-	void moveBy(Vector2i windowSize, Vector2i position);
+	void moveBy(Vector2i moveAmount);
+	//void moveBy(Vector2i windowSize, Vector2i position);
 
 private:
-
-	const Texture& m_texture;
-	const Vector2i m_size;
+	const Texture* m_texture;
+	Vector2i m_size;
 	Vector2i m_position;
 };

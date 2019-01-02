@@ -8,6 +8,11 @@ public:
 		m_y(y)
 	{}
 
+	Vector2i operator+=(Vector2i v)
+	{
+		return Vector2i(m_x + v.m_x, m_y + v.m_y);
+	}
+
 	int m_x;
 	int m_y;
 };

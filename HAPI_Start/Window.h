@@ -13,7 +13,7 @@ class Sprite;
 class Window
 {
 public:
-	static Window* create(const std::string& name, Vector2i size);
+	Window(Vector2i size);
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 	Window(Window&&) = delete;
@@ -27,16 +27,18 @@ public:
 	Vector2i getSize();
 
 	void blit(const Sprite& sprite) const;
-	void blit(const Sprite& sprite, float i) const;
+	//void blit(const Sprite& sprite, float i) const;
 
 	void clearScreenToBlack() const;
 	void clearScreenToGrey() const;
+	void close();
 
 private:
 	const Vector2i m_windowSize;
 	const int m_maxEyeDistance;
 	const int m_minEyeDistance;
 	int m_eyeDistance;
+	bool m_isOpen;
 
-	Window(const std::string& name, Vector2i size);
+	
 };

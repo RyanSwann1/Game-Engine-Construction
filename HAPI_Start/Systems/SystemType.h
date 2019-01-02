@@ -2,7 +2,12 @@
 
 enum class SystemType
 {
-	SystemDrawable = 0,
-	SystemPosition,
+	Drawable = 0,
+	Position,
+	Player,
+	Movable,
+	Global,
 	Total
 };
+
+constexpr size_t TotalSystems = static_cast<size_t>(SystemType::Total);

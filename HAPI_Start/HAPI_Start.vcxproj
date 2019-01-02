@@ -19,11 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationNameConverter.cpp" />
+    <ClCompile Include="Animation\AnimationDetails.cpp" />
+    <ClCompile Include="Animation\AnimationPlayer.cpp" />
+    <ClCompile Include="Components\ComponentAnimation.cpp" />
     <ClCompile Include="Components\ComponentDrawable.cpp" />
     <ClCompile Include="Components\ComponentMovable.cpp" />
     <ClCompile Include="Components\ComponentPosition.cpp" />
+    <ClCompile Include="EntityNameConverter.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Managers\EntityAnimations.cpp" />
     <ClCompile Include="Managers\EntityManager.cpp" />
+    <ClCompile Include="Managers\InputManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
     <ClCompile Include="Managers\TextureManager.cpp" />
     <ClCompile Include="Rectangle.cpp" />
@@ -31,20 +39,35 @@
     <ClCompile Include="States\StateGame.cpp" />
     <ClCompile Include="States\StateMainMenu.cpp" />
     <ClCompile Include="Managers\SystemManager.cpp" />
+    <ClCompile Include="Systems\SystemAnimation.cpp" />
     <ClCompile Include="Systems\SystemDrawable.cpp" />
+    <ClCompile Include="Systems\SystemMovable.cpp" />
+    <ClCompile Include="Systems\SystemPlayer.cpp" />
+    <ClCompile Include="Systems\SystemPosition.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Allocate.h" />
+    <ClInclude Include="AnimationNameConverter.h" />
+    <ClInclude Include="Animation\AnimationDetails.h" />
+    <ClInclude Include="Animation\AnimationName.h" />
+    <ClInclude Include="Animation\AnimationPlayer.h" />
+    <ClInclude Include="EntityNameConverter.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="NameConverter.h" />
+    <ClInclude Include="Components\ComponentAnimation.h" />
     <ClInclude Include="Components\ComponentDrawable.h" />
     <ClInclude Include="Components\ComponentMovable.h" />
     <ClInclude Include="Components\ComponentPosition.h" />
     <ClInclude Include="Components\ComponentType.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityName.h" />
+    <ClInclude Include="KeyCommand.h" />
+    <ClInclude Include="Managers\EntityAnimations.h" />
     <ClInclude Include="Managers\EntityManager.h" />
+    <ClInclude Include="Managers\InputManager.h" />
     <ClInclude Include="Managers\StateManager.h" />
     <ClInclude Include="Managers\TextureManager.h" />
     <ClInclude Include="Rectangle.h" />
@@ -54,11 +77,18 @@
     <ClInclude Include="States\StateMainMenu.h" />
     <ClInclude Include="States\StateType.h" />
     <ClInclude Include="Managers\SystemManager.h" />
+    <ClInclude Include="MoveDirection.h" />
+    <ClInclude Include="Systems\SystemAnimation.h" />
     <ClInclude Include="Systems\SystemDrawable.h" />
     <ClInclude Include="Systems\SystemBase.h" />
-    <ClInclude Include="Systems\SystemMessage.h" />
+    <ClInclude Include="Systems\SystemAction.h" />
+    <ClInclude Include="Systems\SystemSpecializedMessage.h" />
+    <ClInclude Include="Systems\SystemMovable.h" />
+    <ClInclude Include="Systems\SystemPlayer.h" />
+    <ClInclude Include="Systems\SystemPosition.h" />
     <ClInclude Include="Systems\SystemType.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2f.h" />
     <ClInclude Include="Vector2i.h" />

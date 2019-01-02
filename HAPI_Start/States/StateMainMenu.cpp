@@ -9,6 +9,6 @@ void StateMainMenu::update()
 {
 }
 
-void StateMainMenu::draw() const
+void StateMainMenu::draw(const Window& window) const
 {
 }

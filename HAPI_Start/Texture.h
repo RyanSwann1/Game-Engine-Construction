@@ -2,20 +2,16 @@
 
 using BYTE = unsigned char;
 #include "Vector2i.h"
-
+#include <string>
 
 class Texture
 {
 public:
-	Texture(Vector2i size, BYTE* texture = nullptr);
-	Texture(Texture& t);
-	Texture(Texture&& t);
+	Texture(const std::string& name);
+	//Texture(Texture& t);
+	//Texture(Texture&& t);
 	~Texture();
 
-	Vector2i getSize() const;
-	const BYTE* getTextureData() const;
-
-private:
+	const BYTE* m_texture;
 	Vector2i m_size;
-	BYTE* m_texture;
 };

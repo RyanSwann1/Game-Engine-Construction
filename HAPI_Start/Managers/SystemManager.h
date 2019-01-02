@@ -3,58 +3,78 @@
 #include "../Components/ComponentPosition.h"
 #include "../Components/ComponentDrawable.h"
 #include "../Components/ComponentMovable.h"
-#include "../Systems/SystemMessage.h"
+#include "../Components/ComponentAnimation.h"
+#include "../Systems/SystemBase.h"
+#include "../Systems/SystemSpecializedMessage.h"
 #include <vector>
 #include <algorithm>
 #include <assert.h>
-#include <list>
+#include <memory>
+#include <array>
 
+class Window;
+class Entity;
 class SystemManager
 {
+	friend class SystemBase;
+	friend class SystemDrawable;
+	friend class SystemAnimation;
+	friend class SystemMovable;
+	friend class SystemPosition;
+
+	class SystemGeneralMessage
+	{
+	public:
+		SystemGeneralMessage(const Entity& entity, SystemAction message, SystemType messageDestination)
+			: m_message(message),
+			m_entity(entity),
+			m_destination(messageDestination)
+		{}
+
+		const SystemAction m_message;
+		const Entity& m_entity;
+		const SystemType m_destination;
+	};
+
 public:
 	static SystemManager& getInstance()
 	{
-		static SystemManager systemManager;
-		return systemManager;
+		static SystemManager instance;
+		return instance;
 	}
-
 	SystemManager(const SystemManager&) = delete;
 	SystemManager& operator=(const SystemManager&) = delete;
 	SystemManager(SystemManager&&) = delete;
 	SystemManager&& operator=(SystemManager&&) = delete;
 
-	void assignEntityToComponents(const std::array<ComponentType, TotalComponents>& entityComponents, int entityID);
-
-	template <class Component>
-	Component& getEntityComponent(int entityID, ComponentType componentType) const
-	{
-		switch (componentType)
-		{
-		case ComponentType::Position :
-		{
-			return getComponent<ComponentPosition>(m_positionComponents, entityID);
-			break;
-		}
-		case ComponentType::Drawable :
-		{
-
-			break;
-		}
-		case ComponentType::Movable :
-		{
-
-			break;
-		}
-		}
-	}
+	void initializeComponentsToEntity(const std::array<ComponentType, TotalComponents>& entityComponents, const Entity& entity);
+	void addSystemMessage(SystemAction message, int entityID, SystemType type);
+	void addSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message);
+	void addGeneralSystemMessage(const SystemGeneralMessage& message);
+	void update(const std::vector<Entity*>& entities);
+	void draw(const Window& window) const;
 
 private:
 	SystemManager();
+	const std::array<std::unique_ptr<SystemBase>, TotalSystems> m_systems;
 	std::vector<ComponentPosition> m_positionComponents;
 	std::vector<ComponentDrawable> m_drawableComponents;
 	std::vector<ComponentMovable> m_movableComponents;
-	std::list<SystemMessage> m_systemMessages;
+	std::vector<ComponentAnimation> m_animationComponents;
+	std::vector<SystemGeneralMessage> m_systemMessages;
+	std::vector<SystemSpecializedMessage<Vector2i>> m_systemPositionMessages;
 
+	
+	ComponentPosition& SystemManager::getEntityComponentPosition(int entityID);
+	ComponentDrawable& SystemManager::getEntityComponentDrawable(int entityID);
+	ComponentMovable& SystemManager::getEntityComponentMovable(int entityID);
+
+	void handleSystemMessages();
+	void handleGeneralMessages();
+	void handleSpecializedMessages();
+
+	//***
+	//REPLACE SEARCH WITH ASSERT SEARCH
 	template <class Component>
 	void assignEntityIDToComponent(std::vector<Component>& componentContainer, int entityID)
 	{
@@ -62,14 +82,5 @@ private:
 			[](const auto& component) { return component.m_owningEntityID == ENTITY_NOT_IN_USE; });
 		assert(iter != componentContainer.cend());
 		iter->m_owningEntityID = entityID;
-	}
-
-	template <class Component>
-	Component getComponent(std::vector<Component>& components, int entityID) const
-	{
-		auto iter = std::find_if(components.begin(), components.end(),
-			[entityID](const auto& component) { return component.m_owningEntityID == entityID; });
-		assert(iter != components.cend());
-		return iter;
 	}
 };

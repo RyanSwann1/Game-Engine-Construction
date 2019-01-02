@@ -7,25 +7,12 @@ TextureManager::TextureManager()
 	: m_textures()
 {}
 
-void TextureManager::loadTexture(std::string&& name)
+void TextureManager::loadTexture(const std::string& name)
 {
-	Vector2i textureSize;
-	BYTE* textureData = nullptr;
-	if (!HAPI.LoadTexture(Utilities::getDataDirectory() + name, &textureData, textureSize.m_x, textureSize.m_y))
-	{
-		Utilities::displayErrorMessage("Cannot find texture: " + Utilities::getDataDirectory() + name);
-		return;
-	}
-	
 	auto iter = m_textures.find(name);
-	if (iter != m_textures.cend())
-	{
-		delete textureData;
-		assert(iter == m_textures.cend());
-		return;
-	}
+	assert(iter != m_textures.cend());
 	
-	m_textures.emplace(std::make_pair(std::move(name), Texture(textureSize, textureData)));
+	m_textures.emplace(name, (name));
 }
 
 void TextureManager::unloadTexture(const std::string & name)

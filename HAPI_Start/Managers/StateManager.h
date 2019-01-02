@@ -6,8 +6,8 @@
 #include <functional>
 #include <unordered_map>
 #include <list>
-#include <vector>
 
+class Window;
 class StateManager
 {
 	class StateFactory
@@ -48,7 +48,7 @@ public:
 	void removeState(StateType type);
 
 	void update();
-	void draw() const;
+	void draw(const Window& window) const;
 
 private:
 	const StateFactory m_stateFactory;

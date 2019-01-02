@@ -16,7 +16,6 @@ public:
 		static TextureManager textureManager;
 		return textureManager;
 	}
-
 	TextureManager(const TextureManager&) = delete;
 	TextureManager& operator=(const TextureManager&) = delete;
 	TextureManager(TextureManager&&) = delete;
@@ -24,7 +23,7 @@ public:
 
 	Texture& getTexture(const std::string& name);
 
-	void loadTexture(std::string&& name);
+	void loadTexture(const std::string& name);
 	void unloadTexture(const std::string& name);
 
 private:
