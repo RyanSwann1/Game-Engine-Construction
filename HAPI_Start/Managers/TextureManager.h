@@ -13,15 +13,15 @@ class TextureManager
 public:
 	static TextureManager& getInstance()
 	{
-		static TextureManager textureManager;
-		return textureManager;
+		static TextureManager instance;
+		return instance;
 	}
 	TextureManager(const TextureManager&) = delete;
 	TextureManager& operator=(const TextureManager&) = delete;
 	TextureManager(TextureManager&&) = delete;
 	TextureManager&& operator=(TextureManager&&) = delete;
 
-	Texture& getTexture(const std::string& name);
+	const Texture& getTexture(const std::string& name) const;
 
 	void loadTexture(const std::string& name);
 	void unloadTexture(const std::string& name);

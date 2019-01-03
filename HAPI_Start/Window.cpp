@@ -16,7 +16,6 @@ Window::Window(Vector2i size)
 	Utilities::displayFPSIndicator(Vector2i(250, 250));
 }
 
-
 unsigned int Window::getOffSet(Vector2f position) const
 {
 	return (position.m_x + position.m_y * m_windowSize.m_x) * 4;

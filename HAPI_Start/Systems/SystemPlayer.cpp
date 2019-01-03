@@ -6,16 +6,16 @@
 SystemPlayer::SystemPlayer(SystemType type)
 	: SystemBase(type)
 {
-	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveLeft, *this), 
+	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveLeft, this), 
 		KeyCommandName::PlayerMoveLeft, StateType::Game, KeyBind::LeftArrow);
 
-	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveRight, *this),
+	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveRight, this),
 		KeyCommandName::PlayerMoveRight, StateType::Game, KeyBind::RightArrow);
 
-	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveUp, *this),
+	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveUp, this),
 		KeyCommandName::PlayerMoveUp, StateType::Game, KeyBind::UpArrow);
 
-	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveDown, *this),
+	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveDown, this),
 		KeyCommandName::PlayerMoveDown, StateType::Game, KeyBind::DownArrow);
 }
 
@@ -29,20 +29,20 @@ SystemPlayer::~SystemPlayer()
 
 void SystemPlayer::playerMoveLeft() const
 {
-	SystemManager::getInstance().addSystemMessage(SystemAction::MoveEntityLeft, PLAYER_ID, SystemType::Movable);
+	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityLeft, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveRight() const
 {
-	SystemManager::getInstance().addSystemMessage(SystemAction::MoveEntityRight, PLAYER_ID, SystemType::Movable);
+	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityRight, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveUp() const
 {
-	SystemManager::getInstance().addSystemMessage(SystemAction::MoveEntityUp, PLAYER_ID, SystemType::Movable);
+	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityUp, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveDown() const
 {
-	SystemManager::getInstance().addSystemMessage(SystemAction::MoveEntityDown, PLAYER_ID, SystemType::Movable);
+	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityDown, SystemType::Movable));
 }

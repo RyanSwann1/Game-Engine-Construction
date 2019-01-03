@@ -10,7 +10,7 @@ TextureManager::TextureManager()
 void TextureManager::loadTexture(const std::string& name)
 {
 	auto iter = m_textures.find(name);
-	assert(iter != m_textures.cend());
+	assert(iter == m_textures.cend());
 	
 	m_textures.emplace(name, (name));
 }
@@ -27,7 +27,7 @@ void TextureManager::unloadTexture(const std::string & name)
 	m_textures.erase(iter);
 }
 
-Texture& TextureManager::getTexture(const std::string & name)
+const Texture& TextureManager::getTexture(const std::string & name) const
 {
 	auto iter = m_textures.find(name);
 	assert(iter != m_textures.cend());

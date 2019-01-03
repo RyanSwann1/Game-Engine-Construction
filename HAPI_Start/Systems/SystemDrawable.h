@@ -14,4 +14,5 @@ public:
 
 	void update(const std::vector<Entity*>& entities) const override {}
 	void draw(const Window& window) const;
+	void onSystemMessage(const SystemMessage& systemMessage) const override;
 };

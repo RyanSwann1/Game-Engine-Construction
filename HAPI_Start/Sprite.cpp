@@ -7,8 +7,8 @@
 
 Sprite::Sprite()
 	: m_texture(nullptr),
-	m_size(),
-	m_position()
+	m_size(64, 64),
+	m_position(100, 100)
 {}
 
 const Texture & Sprite::getTexture() const

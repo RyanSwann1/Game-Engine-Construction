@@ -8,7 +8,7 @@ SystemAnimation::SystemAnimation(SystemType type)
 
 void SystemAnimation::update(const std::vector<Entity*>& entities) const
 {
-	for (auto& componentAnimation : SystemManager::getInstance().m_animationComponents)
+	for (auto& componentAnimation : SystemManager::getInstance().getAllAnimationComponents())
 	{
 		componentAnimation.m_animationPlayer.update();
 	}
@@ -16,7 +16,7 @@ void SystemAnimation::update(const std::vector<Entity*>& entities) const
 
 void SystemAnimation::draw(const Window & window) const
 {
-	for (const auto& componentAnimation : SystemManager::getInstance().m_animationComponents)
+	for (const auto& componentAnimation : SystemManager::getInstance().getAllAnimationComponents())
 	{
 		componentAnimation.m_animationPlayer.draw(window);
 	}

@@ -13,7 +13,7 @@ public:
 	SystemMovable&& operator=(SystemMovable&&) = delete;
 
 	void update(const std::vector<Entity*>& entities) const override;
-	void onSystemMessage(SystemAction message, int entityID) const;
+	void onSystemMessage(const SystemMessage& message) const override;
 
 private:
 	void moveEntity(int entityID, Vector2i moveBy) const;

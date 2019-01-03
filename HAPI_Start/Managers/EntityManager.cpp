@@ -9,18 +9,18 @@ constexpr unsigned int TOTAL_PLAYER = 1;
 constexpr unsigned int TOTAL_PROJECTILES = 50;
 constexpr unsigned int TOTAL_ENEMIES = 20;
 
-std::unordered_map<EntityName, std::array<ComponentType, TotalComponents>> assignEntityFactory()
+std::unordered_map<EntityName, std::vector<ComponentType>> assignEntityFactory()
 {
-	std::unordered_map<EntityName, std::array<ComponentType, TotalComponents>> entityComponents;
+	std::unordered_map<EntityName, std::vector<ComponentType>> entityComponents;
 
 	entityComponents.emplace(EntityName::Projectile, 
-		std::array<ComponentType, TotalComponents>{ ComponentType::Position, ComponentType::Drawable, ComponentType::Movable });
+		std::vector<ComponentType>{ ComponentType::Position, ComponentType::Drawable, ComponentType::Movable });
 
 	entityComponents.emplace(EntityName::Player, 
-		std::array<ComponentType, TotalComponents>{ ComponentType::Drawable, ComponentType::Position, ComponentType::Movable });
+		std::vector<ComponentType>{ ComponentType::Drawable, ComponentType::Position, ComponentType::Movable });
 
 	entityComponents.emplace(EntityName::Enemy, 
-		std::array<ComponentType, TotalComponents>{ ComponentType::Drawable, ComponentType::Position, ComponentType::Movable });
+		std::vector<ComponentType>{ ComponentType::Drawable, ComponentType::Position, ComponentType::Movable });
 
 	return entityComponents;
 }
@@ -68,7 +68,7 @@ Entity * EntityManager::EntityFactory::getEntity(EntityName name)
 	return availableEntity;
 }
 
-const std::array<ComponentType, TotalComponents>& EntityManager::EntityFactory::getEntityComponents(EntityName name) const
+const std::vector<ComponentType>& EntityManager::EntityFactory::getEntityComponents(EntityName name) const
 {
 	auto iter = m_entityFactory.find(name);
 	assert(iter != m_entityFactory.cend());
@@ -79,7 +79,9 @@ void EntityManager::EntityFactory::createEntity(EntityName name)
 {
 	const Entity entity(name, m_entityCount);
 	SystemManager::getInstance().initializeComponentsToEntity(getEntityComponents(entity.m_name), entity);
+	SystemManager::getInstance().sendInstantSystemMessage(SystemMessage(entity, SystemAction::InitializeEntitySprite, SystemType::Global));
 	m_entityPool.push_back(entity);
+
 	++m_entityCount;
 }
 
@@ -95,6 +97,12 @@ const Entity & EntityManager::getEntity(int entityID) const
 	auto iter = std::find_if(m_entities.cbegin(), m_entities.cend(), [entityID](const auto& entity) { return entity->m_ID == entityID; });
 	assert(iter != m_entities.cend());
 	return *(*iter);
+}
+
+const std::vector<Entity*>& EntityManager::getEntities() const
+{
+	assert(!m_entities.empty());
+	return m_entities;
 }
 
 void EntityManager::addEntity(EntityName name, Vector2i startingPosition)
@@ -115,12 +123,14 @@ void EntityManager::update()
 
 void EntityManager::handleEntityRemovals()
 {
-	for (const int entityIDToRemove : m_entitiesToRemove)
+	for (int entityIDToRemove : m_entitiesToRemove)
 	{
 		auto entity = std::find_if(m_entities.begin(), m_entities.end(),
 			[entityIDToRemove](const auto& entity) { return entity->m_ID == entityIDToRemove; });
 		assert(entity != m_entities.cend());
 		(*entity)->m_inUse = false;
+
+		m_entities.erase(entity);
 	}
 
 	m_entitiesToRemove.clear();
@@ -128,14 +138,15 @@ void EntityManager::handleEntityRemovals()
 
 void EntityManager::handleEntityAdditions()
 {
-	////SystemSpecializedMessage(const Entity& entity, Message message, SystemAction systemAction, SystemType messageDestination)
 	for (const std::pair<EntityName, Vector2i>& entityToAdd : m_entitiesToAdd)
 	{
 		Entity* entity = m_entityFactory.getEntity(entityToAdd.first);
 		assert(entity);
 		entity->m_inUse = true;
 		SystemManager::getInstance().addSpecializedSystemMessage(
-				SystemSpecializedMessage<Vector2i>(entity, Vector2i(), SystemAction::InitializeEntity, SystemType::Global));
+	SystemSpecializedMessage<Vector2i>(*entity, entityToAdd.second, SystemAction::SetStartingPosition, SystemType::Global));
+
+		m_entities.push_back(entity);
 	}
 
 	m_entitiesToAdd.clear();

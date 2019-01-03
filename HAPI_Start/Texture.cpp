@@ -7,13 +7,14 @@
 HAPISPACE::BYTE* loadTexture(const std::string& name, Vector2i& size)
 {
 	HAPISPACE::BYTE* texture = nullptr;
-	const bool textureLoaded = HAPI.LoadTexture(name, &texture, size.m_x, size.m_y);
+	const bool textureLoaded = HAPI.LoadTexture(Utilities::getDataDirectory() + name, &texture, size.m_x, size.m_y);
 	assert(textureLoaded);
 	return texture;
 }
 
 Texture::Texture(const std::string& name)
-	: m_texture(loadTexture(name, m_size))
+	: m_texture(loadTexture(name, Vector2i(64, 64))),
+		m_size(64, 64)
 {}
 
 //Texture::Texture(Texture &t)

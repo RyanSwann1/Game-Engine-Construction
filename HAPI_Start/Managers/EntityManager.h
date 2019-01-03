@@ -6,6 +6,7 @@
 #include <functional>
 #include <string>
 #include <assert.h>
+#include <array>
 #include "../Entity.h"
 #include "../Components/ComponentType.h"
 #include "../Vector2i.h"
@@ -28,11 +29,11 @@ class EntityManager
 		Entity* getEntity(EntityName name);
 
 	private:
-		const std::unordered_map<EntityName, std::array<ComponentType, TotalComponents>> m_entityFactory;
+		const std::unordered_map<EntityName, std::vector<ComponentType>> m_entityFactory;
 		std::vector<Entity> m_entityPool;
 		int m_entityCount;
 
-		const std::array<ComponentType, TotalComponents>& getEntityComponents(EntityName name) const;
+		const std::vector<ComponentType>& getEntityComponents(EntityName name) const;
 		void createEntity(EntityName name);
 	};
 
@@ -44,6 +45,7 @@ public:
 	EntityManager&& operator=(EntityManager&&) = delete;
 
 	const Entity& getEntity(int entityID) const;
+	const std::vector<Entity*>& getEntities() const;
 
 	void addEntity(EntityName name, Vector2i startingPosition);
 	void removeEntity(int entityID);

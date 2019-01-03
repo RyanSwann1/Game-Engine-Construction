@@ -20,30 +20,8 @@ public:
 private:
 	Window m_window;
 	StateManager m_stateManager;
+	bool m_gameIsRunning;
 
-	float getDeltaTime(DWORD lastFrameStart, DWORD frameStart) const
-	{
-		return static_cast<float>(frameStart - lastFrameStart) / 1000.f;
-	}
-
-	//
-	//void gameLoop(Sprite& playerSprite, Window & window, int spriteMovementSpeed)
-	//{
-	//	auto lastFrameStart = HAPI.GetTime();
-	//	while (HAPI.Update())
-	//	{
-	//		//inputManager.registerBind('v');
-	//		const auto frameStart = HAPI.GetTime(); 
-	//		
-	//		window.clearScreenToBlack();
-	//
-	//		handleSpriteMovement(playerSprite, window.getSize(), spriteMovementSpeed);
-	//
-	//		window.blit(playerSprite);
-	//
-	//		lastFrameStart = frameStart;
-	//	}
-	//}
-
+	float getDeltaTime(DWORD lastFrameStart, DWORD frameStart) const;
 };
 

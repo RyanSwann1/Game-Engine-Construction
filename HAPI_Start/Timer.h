@@ -5,8 +5,8 @@ class Timer
 public:
 	Timer() {}
 
-	bool isActive() const {}
-	bool isExpired() const {}
+	bool isActive() const { return true; }
+	bool isExpired() const { return true; }
 	void reset() {}
 	void update() {}
 private:

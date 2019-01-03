@@ -6,8 +6,8 @@ enum class SystemType
 	Position,
 	Player,
 	Movable,
-	Global,
-	Total
+	Total,
+	Global
 };
 
 constexpr size_t TotalSystems = static_cast<size_t>(SystemType::Total);

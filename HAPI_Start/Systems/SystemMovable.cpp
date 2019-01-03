@@ -11,7 +11,7 @@ void SystemMovable::update(const std::vector<Entity*>& entities) const
 {
 	for (const auto& entity : entities)
 	{
-		const auto& componentMovable = SystemManager::getInstance().getEntityComponentMovable(entity->m_ID);
+		const auto& componentMovable = SystemManager::getInstance().getComponentMovable(entity->m_ID);
 		Vector2i entitySpeed = componentMovable.m_speed;
 		switch (componentMovable.m_moveDirection)
 		{
@@ -39,10 +39,10 @@ void SystemMovable::update(const std::vector<Entity*>& entities) const
 	}
 }
 
-void SystemMovable::onSystemMessage(SystemAction message, int entityID) const
+void SystemMovable::onSystemMessage(const SystemMessage& message) const
 {
-	auto& entityMoveDirection = SystemManager::getInstance().getEntityComponentMovable(entityID).m_moveDirection;
-	switch (message)
+	auto& entityMoveDirection = SystemManager::getInstance().getComponentMovable(message.m_entity.m_ID).m_moveDirection;
+	switch (message.m_action)
 	{
 	case SystemAction::MoveEntityLeft :
 	{
@@ -69,6 +69,6 @@ void SystemMovable::onSystemMessage(SystemAction message, int entityID) const
 
 void SystemMovable::moveEntity(int entityID, Vector2i moveBy) const
 {
-	auto& componentPosition = SystemManager::getInstance().getEntityComponentPosition(entityID);
+	auto& componentPosition = SystemManager::getInstance().getComponentPosition(entityID);
 	componentPosition.m_position += moveBy;
 } 

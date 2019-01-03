@@ -16,26 +16,6 @@ class Window;
 class Entity;
 class SystemManager
 {
-	friend class SystemBase;
-	friend class SystemDrawable;
-	friend class SystemAnimation;
-	friend class SystemMovable;
-	friend class SystemPosition;
-
-	class SystemGeneralMessage
-	{
-	public:
-		SystemGeneralMessage(const Entity& entity, SystemAction message, SystemType messageDestination)
-			: m_message(message),
-			m_entity(entity),
-			m_destination(messageDestination)
-		{}
-
-		const SystemAction m_message;
-		const Entity& m_entity;
-		const SystemType m_destination;
-	};
-
 public:
 	static SystemManager& getInstance()
 	{
@@ -47,10 +27,19 @@ public:
 	SystemManager(SystemManager&&) = delete;
 	SystemManager&& operator=(SystemManager&&) = delete;
 
-	void initializeComponentsToEntity(const std::array<ComponentType, TotalComponents>& entityComponents, const Entity& entity);
-	void addSystemMessage(SystemAction message, int entityID, SystemType type);
+	std::vector<ComponentPosition>& getAllPositionComponents();
+	std::vector<ComponentDrawable>& getAllDrawableComponents();
+	std::vector<ComponentMovable> & getAllMovableComponents();
+	std::vector<ComponentAnimation>& getAllAnimationComponents();
+
+	ComponentPosition& getComponentPosition(int entityID);
+	ComponentDrawable& getComponentDrawable(int entityID);
+	ComponentMovable& getComponentMovable(int entityID);
+
+	void initializeComponentsToEntity(const std::vector<ComponentType>& entityComponents, const Entity& entity);
 	void addSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message);
-	void addGeneralSystemMessage(const SystemGeneralMessage& message);
+	void addSystemMessage(const SystemMessage& message);
+	void sendInstantSystemMessage(const SystemMessage& message) const;
 	void update(const std::vector<Entity*>& entities);
 	void draw(const Window& window) const;
 
@@ -61,26 +50,19 @@ private:
 	std::vector<ComponentDrawable> m_drawableComponents;
 	std::vector<ComponentMovable> m_movableComponents;
 	std::vector<ComponentAnimation> m_animationComponents;
-	std::vector<SystemGeneralMessage> m_systemMessages;
+	std::vector<SystemMessage> m_systemMessages;
 	std::vector<SystemSpecializedMessage<Vector2i>> m_systemPositionMessages;
 
-	
-	ComponentPosition& SystemManager::getEntityComponentPosition(int entityID);
-	ComponentDrawable& SystemManager::getEntityComponentDrawable(int entityID);
-	ComponentMovable& SystemManager::getEntityComponentMovable(int entityID);
-
 	void handleSystemMessages();
-	void handleGeneralMessages();
 	void handleSpecializedMessages();
 
-	//***
-	//REPLACE SEARCH WITH ASSERT SEARCH
 	template <class Component>
 	void assignEntityIDToComponent(std::vector<Component>& componentContainer, int entityID)
 	{
-		auto iter = std::find_if(componentContainer.begin(), componentContainer.end(),
-			[](const auto& component) { return component.m_owningEntityID == ENTITY_NOT_IN_USE; });
-		assert(iter != componentContainer.cend());
-		iter->m_owningEntityID = entityID;
+		static_cast<Component>(componentContainer[entityID]).m_owningEntityID = entityID;
+		//auto iter = std::find_if(componentContainer.begin(), componentContainer.end(),
+		//	[](const auto& component) { return component.m_owningEntityID == ENTITY_NOT_IN_USE; });
+		//assert(iter != componentContainer.cend());
+		//iter->m_owningEntityID = entityID;
 	}
 };

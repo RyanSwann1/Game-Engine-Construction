@@ -4,10 +4,9 @@
 
 void HAPI_Main()
 {
-	Vector2i windowSize(480, 640);
+	Vector2i windowSize(1000, 1000);
 	if (!HAPI.Initialise(windowSize.m_x, windowSize.m_y, "HAPI_WINDOW"))
 	{
-		//Utilities::displayErrorMessage("Error");
 		return;
 	}
 
