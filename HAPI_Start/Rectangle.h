@@ -5,18 +5,17 @@
 class Rectangle
 {
 public:
-	Rectangle(int left, int right, int top, int bottom);
+	Rectangle(int x = 0, int y = 0, int width = 0, int height = 0);
 
-	void add(int right, int bottom);
 	int getWidth() const;
 	int getHeight() const;
 
 	void clipTo(const Rectangle& other);
+	void translate(int x, int y);
+	void print();
 
-private:
-	int m_left;
-	int m_right;
-	int m_top;
-	int m_bottom;
+	int m_x;
+	int m_width;
+	int m_y;
+	int m_height;
 };
-

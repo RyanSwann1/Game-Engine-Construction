@@ -7,8 +7,7 @@
 
 Sprite::Sprite()
 	: m_texture(nullptr),
-	m_size(64, 64),
-	m_position(100, 100)
+	m_rect()
 {}
 
 const Texture & Sprite::getTexture() const
@@ -17,29 +16,15 @@ const Texture & Sprite::getTexture() const
 	return *m_texture;
 }
 
-Vector2i Sprite::getPosition() const
-{
-	return m_position;
-}
-
 void Sprite::setTexture(const std::string & name)
 {
 	m_texture = &TextureManager::getInstance().getTexture(name);
 }
 
-void Sprite::moveBy(Vector2i moveAmount)
+void Sprite::setRect(int x, int y, int width, int height)
 {
-	m_position += moveAmount;
+	m_rect.m_width = width;
+	m_rect.m_height = height;
+	m_rect.m_x = x;
+	m_rect.m_y = y;
 }
-
-//void Sprite::moveBy(Vector2i windowSize, Vector2i position)
-//{
-//	const Vector2i newPosition(m_position.m_x + position.m_x, m_position.m_y + position.m_y);
-//	if (newPosition.m_x > 0 &&
-//		newPosition.m_y > 0 &&
-//		newPosition.m_x + m_size.m_x < windowSize.m_x &&
-//		newPosition.m_y + m_size.m_y < windowSize.m_y)
-//	{
-//		m_position = newPosition;
-//	}
-//}

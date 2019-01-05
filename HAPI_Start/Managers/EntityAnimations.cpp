@@ -10,7 +10,7 @@
 
 std::unordered_map<EntityName, std::vector<AnimationDetails>> initializeAnimations()
 {
-	std::ifstream file(Utilities::getDataDirectory());
+	std::ifstream file(Utilities::getDataDirectory() + "Animations.txt");
 	assert(file.is_open());
 	std::string line;
 	std::unordered_map<EntityName, std::vector<AnimationDetails>> entityAnimations;
@@ -31,22 +31,22 @@ std::unordered_map<EntityName, std::vector<AnimationDetails>> initializeAnimatio
 		keyStream >> entityName >> textureName >> animationName >> direction >> startID >> endID >> frameTime
 			>> repeatable >> drawLocationSize.m_x >> drawLocationSize.m_y >> reversible;
 
-		const AnimationName convertedAnimationName = AnimationNameConverter::getInstance().getConvertedName(animationName);
 		const EntityName convertedEntityName = EntityNameConverter::getInstance().getConvertedName(entityName);
-
-		//AnimationDetails(EntityName entityName, AnimationName name, std::string&& textureName,
-		//	MoveDirection direction, int startID, int endID, float frameTime, bool repeatable, bool reversible, Vector2i drawLocationSize);
+		const AnimationName convertedAnimationName = AnimationNameConverter::getInstance().getConvertedName(animationName);
 
 		auto iter = entityAnimations.find(convertedEntityName);
+		//If entity animations already exist
 		if (iter != entityAnimations.cend())
 		{
-		/*	iter->second.emplace_back(convertedEntityName, convertedAnimationName, direction, startID, endID, frameTime,
-				repeatable, reversible, drawLocationSize);*/
+			iter->second.emplace_back(convertedEntityName, convertedAnimationName, std::move(textureName),
+				std::move(direction), startID, endID, frameTime, repeatable, reversible, drawLocationSize);
 		}
+		//new entity animations
 		else
 		{
-			//entityAnimations.emplace(convertedEntityName, (convertedEntityName, convertedAnimationName,
-			//	std::move(textureName), direction, startID, endID, frameTime, repeatable, reversible, drawLocationSize));
+			std::vector<AnimationDetails> v{ AnimationDetails(convertedEntityName, convertedAnimationName, std::move(textureName),
+				std::move(direction), startID, endID, frameTime, repeatable, reversible, drawLocationSize) };
+			entityAnimations.emplace(convertedEntityName, std::move(v));
 		}
 	}
 	
@@ -54,11 +54,10 @@ std::unordered_map<EntityName, std::vector<AnimationDetails>> initializeAnimatio
 	return entityAnimations;
 }
 
+//Entity Animations
 EntityAnimations::EntityAnimations()
 	: m_entityAnimations(initializeAnimations())
-{
-
-}
+{}
 
 const std::vector<AnimationDetails>& EntityAnimations::getAllEntityAnimations(EntityName entityName) const
 {

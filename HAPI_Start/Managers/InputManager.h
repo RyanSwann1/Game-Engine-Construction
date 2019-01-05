@@ -49,4 +49,5 @@ public:
 private:
 	InputManager();
 	std::vector<Binding> m_bindings;
+	std::vector<std::function<void()>> m_callBacks;
 };

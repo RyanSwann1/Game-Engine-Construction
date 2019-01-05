@@ -4,26 +4,29 @@
 #include "../Systems/SystemMovable.h"
 #include "../Systems/SystemDrawable.h"
 #include "../Systems/SystemPosition.h"
+#include "../Systems/SystemAnimation.h"
 #include "../EntityNameConverter.h"
 #include "../Utilities.h"
+#include "../Systems/SystemMessage.h"
 
 std::array<std::unique_ptr<SystemBase>, TotalSystems> assignSystems()
 {
 	std::array<std::unique_ptr<SystemBase>, TotalSystems> systems;
-	systems[static_cast<int>(SystemType::Player)] = std::make_unique<SystemPlayer>(SystemType::Player);
-	systems[static_cast<int>(SystemType::Movable)] = std::make_unique<SystemMovable>(SystemType::Movable);
-	systems[static_cast<int>(SystemType::Drawable)] = std::make_unique<SystemDrawable>(SystemType::Drawable);
-	systems[static_cast<int>(SystemType::Position)] = std::make_unique<SystemPlayer>(SystemType::Position);
+	systems[static_cast<int>(SystemType::Player)] = std::make_unique<SystemPlayer>();
+	systems[static_cast<int>(SystemType::Movable)] = std::make_unique<SystemMovable>();
+	systems[static_cast<int>(SystemType::Drawable)] = std::make_unique<SystemDrawable>();
+	systems[static_cast<int>(SystemType::Position)] = std::make_unique<SystemPosition>();
+	systems[static_cast<int>(SystemType::Animation)] = std::make_unique<SystemAnimation>();
 
 	return systems;
 }
 
 SystemManager::SystemManager()
 	: m_systems(assignSystems()),
-	m_positionComponents(MAX_ENTITIES, ComponentPosition(ComponentType::Position)),
-	m_drawableComponents(MAX_ENTITIES, ComponentDrawable(ComponentType::Drawable)),
-	m_movableComponents(MAX_ENTITIES, ComponentMovable(ComponentType::Movable)),
-	m_systemMessages()
+	m_positionComponents(MAX_ENTITIES, ComponentPosition()),
+	m_drawableComponents(MAX_ENTITIES, ComponentDrawable()),
+	m_movableComponents(MAX_ENTITIES, ComponentMovable()),
+	m_animationComponents(MAX_ENTITIES, ComponentAnimation())
 {}
 
 void SystemManager::initializeComponentsToEntity(const std::vector<ComponentType>& entityComponents, const Entity& entity)
@@ -34,25 +37,25 @@ void SystemManager::initializeComponentsToEntity(const std::vector<ComponentType
 		{
 		case ComponentType::Position :
 		{
-			assert(m_positionComponents[entity.m_ID].m_owningEntityID == ENTITY_NOT_IN_USE);
+			assert(m_positionComponents[entity.m_ID].m_owningEntityID == ENTITY_ID_NULL);
 			m_positionComponents[entity.m_ID].m_owningEntityID = entity.m_ID;
 			break;
 		}
 		case ComponentType::Drawable :
 		{
-			assert(m_drawableComponents[entity.m_ID].m_owningEntityID == ENTITY_NOT_IN_USE);
+			assert(m_drawableComponents[entity.m_ID].m_owningEntityID == ENTITY_ID_NULL);
 			m_drawableComponents[entity.m_ID].m_owningEntityID = entity.m_ID;
 			break;
 		}
 		case ComponentType::Animation :
 		{
-			assert(m_animationComponents[entity.m_ID].m_owningEntityID == ENTITY_NOT_IN_USE);
+			assert(m_animationComponents[entity.m_ID].m_owningEntityID == ENTITY_ID_NULL);
 			m_animationComponents[entity.m_ID].m_owningEntityID = entity.m_ID;
 			break;
 		}
 		case ComponentType::Movable :
 		{
-			assert(m_movableComponents[entity.m_ID].m_owningEntityID == ENTITY_NOT_IN_USE);
+			assert(m_movableComponents[entity.m_ID].m_owningEntityID == ENTITY_ID_NULL);
 			m_movableComponents[entity.m_ID].m_owningEntityID = entity.m_ID;
 			break;
 		}
@@ -60,50 +63,23 @@ void SystemManager::initializeComponentsToEntity(const std::vector<ComponentType
 	}
 }
 
-void SystemManager::handleSystemMessages()
+void SystemManager::sendSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message)
 {
-	if (m_systemMessages.empty())
-	{
-		return;
-	}
 
-	for (const auto& systemMessage : m_systemMessages)
+}
+
+void SystemManager::sendSystemMessage(const SystemMessage & message)
+{
+	if (message.m_destination == SystemType::Global)
 	{
-		if (systemMessage.m_destination == SystemType::Global)
+		for (const auto& system : m_systems)
 		{
-			for (const auto& system : m_systems)
-			{
-				system->onSystemMessage(systemMessage);
-			}
-		}
-		else
-		{
-			m_systems[static_cast<int>(systemMessage.m_destination)]->onSystemMessage(systemMessage);
+			system->onSystemMessage(message);
 		}
 	}
-
-	m_systemMessages.clear();
-}
-
-void SystemManager::handleSpecializedMessages()
-{
-
-}
-
-void SystemManager::addSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message)
-{
-}
-
-void SystemManager::addSystemMessage(const SystemMessage & message)
-{
-	m_systemMessages.push_back(message);
-}
-
-void SystemManager::sendInstantSystemMessage(const SystemMessage & message) const
-{
-	for (const auto& system : m_systems)
+	else
 	{
-		system->onSystemMessage(message);
+		m_systems[static_cast<int>(message.m_destination)]->onSystemMessage(message);
 	}
 }
 
@@ -125,13 +101,17 @@ ComponentMovable & SystemManager::getComponentMovable(int entityID)
 	return m_movableComponents[entityID];
 }
 
-void SystemManager::update(const std::vector<Entity*>& entities)
+ComponentAnimation & SystemManager::getComponentAnimation(int entityID)
 {
-	handleSystemMessages();
+	assert(entityID == m_animationComponents[entityID].m_owningEntityID);
+	return m_animationComponents[entityID];
+}
 
+void SystemManager::update(float deltaTime) const
+{
 	for (const auto& system : m_systems)
 	{
-		system->update(entities);
+		system->update(deltaTime);
 	}
 }
 

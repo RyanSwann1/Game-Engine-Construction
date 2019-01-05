@@ -2,9 +2,8 @@
 #include "../Managers/EntityManager.h"
 #include "ComponentPosition.h"
 
-ComponentPosition::ComponentPosition(ComponentType type)
-	: m_type(type),
-	m_owningEntityID(ENTITY_NOT_IN_USE),
+ComponentPosition::ComponentPosition()
+	: m_owningEntityID(ENTITY_ID_NULL),
 	m_position(),
 	m_oldPosition()
 {}

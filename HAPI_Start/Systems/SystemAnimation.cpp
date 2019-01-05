@@ -1,23 +1,16 @@
 #include "SystemAnimation.h"
 #include "../Managers/SystemManager.h"
+#include "../Managers/EntityManager.h"
 
-SystemAnimation::SystemAnimation(SystemType type)
-	: SystemBase(type)
-{
-}
-
-void SystemAnimation::update(const std::vector<Entity*>& entities) const
+void SystemAnimation::update(float deltaTime) const
 {
 	for (auto& componentAnimation : SystemManager::getInstance().getAllAnimationComponents())
 	{
-		componentAnimation.m_animationPlayer.update();
-	}
-}
+		if (componentAnimation.m_owningEntityID == ENTITY_ID_NULL)
+		{
+			continue;
+		}
 
-void SystemAnimation::draw(const Window & window) const
-{
-	for (const auto& componentAnimation : SystemManager::getInstance().getAllAnimationComponents())
-	{
-		componentAnimation.m_animationPlayer.draw(window);
+		
 	}
 }

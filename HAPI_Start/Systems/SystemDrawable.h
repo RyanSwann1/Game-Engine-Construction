@@ -6,13 +6,12 @@ class SystemDrawable :
 	public SystemBase
 {
 public:
-	SystemDrawable(SystemType type);
+	SystemDrawable() {}
 	SystemDrawable(const SystemDrawable&) = delete;
 	SystemDrawable& operator=(const SystemDrawable&) = delete;
 	SystemDrawable(SystemDrawable&&) = delete;
 	SystemDrawable&& operator=(SystemDrawable&&) = delete;
 
-	void update(const std::vector<Entity*>& entities) const override {}
+	void update(float deltaTime) const override {}
 	void draw(const Window& window) const;
-	void onSystemMessage(const SystemMessage& systemMessage) const override;
 };

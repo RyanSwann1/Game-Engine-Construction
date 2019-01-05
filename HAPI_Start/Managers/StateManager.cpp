@@ -62,11 +62,11 @@ void StateManager::removeState(StateType type)
 	m_removals.push_back(type);
 }
 
-void StateManager::update()
+void StateManager::update(float deltaTime)
 {
 	assert(!m_states.empty());
 
-	m_states.front()->update();
+	m_states.front()->update(deltaTime);
 	handleRemovals();
 }
 

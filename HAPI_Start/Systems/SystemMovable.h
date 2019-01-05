@@ -6,13 +6,13 @@
 class SystemMovable : public SystemBase
 {
 public:
-	SystemMovable(SystemType type);
+	SystemMovable() {}
 	SystemMovable(const SystemMovable&) = delete;
 	SystemMovable& operator=(const SystemMovable&) = delete;
 	SystemMovable(SystemMovable&&) = delete;
 	SystemMovable&& operator=(SystemMovable&&) = delete;
 
-	void update(const std::vector<Entity*>& entities) const override;
+	void update(float deltaTime) const override;
 	void onSystemMessage(const SystemMessage& message) const override;
 
 private:

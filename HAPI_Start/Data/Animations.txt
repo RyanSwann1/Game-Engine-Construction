@@ -1,0 +1,2 @@
+|EntityName|SpriteSheet|Name|Direction|StartID|EndID|FrameTime|Repeatable|DrawLocationSize.x|DrawLocationSize.y|Reversible|
+Player character Default Horizontal 0 0 0.0 1 1 2 0

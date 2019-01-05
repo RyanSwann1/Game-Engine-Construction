@@ -21,7 +21,10 @@ private:
 	Window m_window;
 	StateManager m_stateManager;
 	bool m_gameIsRunning;
+	HAPISPACE::DWORD m_lastFrameStart;
+	HAPISPACE::DWORD m_frameStart;
+	float m_deltaTime;
 
-	float getDeltaTime(DWORD lastFrameStart, DWORD frameStart) const;
+	float getDeltaTime() const;
 };
 

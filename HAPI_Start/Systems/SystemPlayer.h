@@ -5,14 +5,14 @@
 class SystemPlayer : public SystemBase
 {
 public:
-	SystemPlayer(SystemType type);
+	SystemPlayer();
 	~SystemPlayer() override;
 	SystemPlayer(const SystemPlayer&) = delete;
 	SystemPlayer& operator=(const SystemPlayer&) = delete;
 	SystemPlayer(SystemPlayer&&) = delete;
 	SystemPlayer&& operator=(SystemPlayer&&) = delete;
 
-	void update(const std::vector<Entity*>& entities) const override {}
+	void update(float deltaTime) const override {}
 
 private:
 	void playerMoveLeft() const;

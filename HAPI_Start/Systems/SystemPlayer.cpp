@@ -2,9 +2,9 @@
 #include "../Managers/EntityManager.h"
 #include "../Managers/InputManager.h"
 #include "../Managers/SystemManager.h"
+#include "../Systems/SystemMessage.h"
 
-SystemPlayer::SystemPlayer(SystemType type)
-	: SystemBase(type)
+SystemPlayer::SystemPlayer()
 {
 	InputManager::getInstance().registerBinding(std::bind(&SystemPlayer::playerMoveLeft, this), 
 		KeyCommandName::PlayerMoveLeft, StateType::Game, KeyBind::LeftArrow);
@@ -29,20 +29,20 @@ SystemPlayer::~SystemPlayer()
 
 void SystemPlayer::playerMoveLeft() const
 {
-	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityLeft, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityLeft, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveRight() const
 {
-	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityRight, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityRight, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveUp() const
 {
-	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityUp, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityUp, SystemType::Movable));
 }
 
 void SystemPlayer::playerMoveDown() const
 {
-	//SystemManager::getInstance().addSystemMessage(SystemMessage(PLAYER_ID, SystemAction::MoveEntityDown, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityDown, SystemType::Movable));
 }

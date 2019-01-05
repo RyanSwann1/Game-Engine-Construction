@@ -6,9 +6,8 @@
 class ComponentDrawable
 {
 public:
-	ComponentDrawable(ComponentType type);
+	ComponentDrawable();
 
-	const ComponentType m_type;
 	int m_owningEntityID;
 	Sprite m_sprite;
 };

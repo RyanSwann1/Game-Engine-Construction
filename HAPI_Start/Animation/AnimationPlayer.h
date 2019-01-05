@@ -2,28 +2,30 @@
 
 #include "../Sprite.h"
 #include "AnimationName.h"
-#include "../EntityName.h"
 #include "../Timer.h"
 #include <unordered_map>
-#include <memory>
 
+enum class EntityName;
 class AnimationDetails;
-class Window;
+class Rectangle;
 class AnimationPlayer
 {
-	class AnimationBase
+	enum class AnimationType
+	{
+		Horizontal = 0,
+		Vertical
+	};
+
+	class Animation
 	{
 	public:
-		AnimationBase(const AnimationDetails& details);
-		AnimationBase(const AnimationBase&) = delete;
-		AnimationBase& operator=(const AnimationBase&) = delete;
-		AnimationBase(AnimationBase&&) = delete;
-		AnimationBase&& operator=(AnimationBase&&) = delete;
+		Animation(const AnimationDetails& details, AnimationType type);
 
-		virtual void update();
+		void update(Rectangle& spriteRect);
 
 	protected:
 		const AnimationDetails& m_animationDetails;
+		const AnimationType m_type;
 		const int m_startFrame;
 		const int m_endFrame;
 		int m_currentID;
@@ -35,42 +37,20 @@ class AnimationPlayer
 		Timer m_frameTimer;
 
 		void reset();
-	};
 
-	class HorizontalAnimation : public AnimationBase
-	{
-	public:
-		HorizontalAnimation(const AnimationDetails& details);
-		HorizontalAnimation(const HorizontalAnimation&) = delete;
-		HorizontalAnimation& operator=(const HorizontalAnimation&) = delete;
-		HorizontalAnimation(HorizontalAnimation&&) = delete;
-		HorizontalAnimation&& operator=(HorizontalAnimation&&) = delete;
-	
-		void update() override;
-	};
-
-	class VerticalAnimation : public AnimationBase
-	{
-	public:
-		VerticalAnimation(const AnimationDetails& details);
-		VerticalAnimation(const VerticalAnimation&) = delete;
-		VerticalAnimation& operator=(const VerticalAnimation&) = delete;
-		VerticalAnimation(VerticalAnimation&&) = delete;
-		VerticalAnimation&& operator=(VerticalAnimation&&) = delete;
-
-		void update() override;
+	private:
+		void handleBaseAnimation();
+		void updateHorizontalAnimation();
+		void updateVerticalAnimation();
 	};
 
 public:
 	AnimationPlayer();
 
 	void initialize(EntityName entityName);
-	void update();
-	void setPosition(Vector2i position);
-	void draw(const Window& window) const;
+	void update(Rectangle& spriteRect);
 
 private:
-	Sprite m_sprite;
-	std::unordered_map<AnimationName, std::unique_ptr<AnimationBase>> m_animations;
-	AnimationBase* m_currentAnimation;
+	std::unordered_map<AnimationName, Animation> m_animations;
+	Animation* m_currentAnimation;
 };

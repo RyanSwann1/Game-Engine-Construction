@@ -1,38 +1,40 @@
 #include "SystemMovable.h"
 #include "../Managers/SystemManager.h"
+#include "../Managers/EntityManager.h"
 #include "../Entity.h"
 #include "../Components/ComponentMovable.h"
+#include "SystemMessage.h"
 
-SystemMovable::SystemMovable(SystemType type)
-	: SystemBase(type)
-{}
-
-void SystemMovable::update(const std::vector<Entity*>& entities) const
+void SystemMovable::update(float deltaTime) const
 {
-	for (const auto& entity : entities)
+	for (const auto& componentMovable : SystemManager::getInstance().getAllMovableComponents())
 	{
-		const auto& componentMovable = SystemManager::getInstance().getComponentMovable(entity->m_ID);
+		if (componentMovable.m_owningEntityID == ENTITY_ID_NULL)
+		{
+			continue;
+		}
+
 		Vector2i entitySpeed = componentMovable.m_speed;
 		switch (componentMovable.m_moveDirection)
 		{
-		case MoveDirection::Left :
+		case MoveDirection::Left:
 		{
-			moveEntity(entity->m_ID, Vector2i(-entitySpeed.m_x, 0));
+			moveEntity(componentMovable.m_owningEntityID, Vector2i(-entitySpeed.m_x, 0));
+			break;
+		} 
+		case MoveDirection::Right:
+		{
+			moveEntity(componentMovable.m_owningEntityID, Vector2i(entitySpeed.m_x, 0));
 			break;
 		}
-		case MoveDirection::Right :
+		case MoveDirection::Up:
 		{
-			moveEntity(entity->m_ID, Vector2i(entitySpeed.m_x, 0));
+			moveEntity(componentMovable.m_owningEntityID, Vector2i(0, -entitySpeed.m_y));
 			break;
 		}
-		case MoveDirection::Up :
+		case MoveDirection::Down:
 		{
-			moveEntity(entity->m_ID, Vector2i(0, -entitySpeed.m_y));
-			break;
-		}
-		case MoveDirection::Down :
-		{
-			moveEntity(entity->m_ID, Vector2i(0, entitySpeed.m_y));
+			moveEntity(componentMovable.m_owningEntityID, Vector2i(0, entitySpeed.m_y));
 			break;
 		}
 		}
@@ -41,7 +43,7 @@ void SystemMovable::update(const std::vector<Entity*>& entities) const
 
 void SystemMovable::onSystemMessage(const SystemMessage& message) const
 {
-	auto& entityMoveDirection = SystemManager::getInstance().getComponentMovable(message.m_entity.m_ID).m_moveDirection;
+	auto& entityMoveDirection = SystemManager::getInstance().getComponentMovable(message.m_entityID).m_moveDirection;
 	switch (message.m_action)
 	{
 	case SystemAction::MoveEntityLeft :

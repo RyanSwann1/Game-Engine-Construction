@@ -6,7 +6,7 @@ enum class SystemAction
 	MoveEntityRight,
 	MoveEntityUp,
 	MoveEntityDown,
-	InitializeEntitySprite,
+	InitializeDrawableEntity,
 	SetStartingPosition,
 	Total
 };

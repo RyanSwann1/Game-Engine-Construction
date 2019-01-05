@@ -12,6 +12,7 @@
 #include <memory>
 #include <array>
 
+class SystemMessage;
 class Window;
 class Entity;
 class SystemManager
@@ -29,18 +30,18 @@ public:
 
 	std::vector<ComponentPosition>& getAllPositionComponents();
 	std::vector<ComponentDrawable>& getAllDrawableComponents();
-	std::vector<ComponentMovable> & getAllMovableComponents();
+	std::vector<ComponentMovable>& getAllMovableComponents();
 	std::vector<ComponentAnimation>& getAllAnimationComponents();
 
 	ComponentPosition& getComponentPosition(int entityID);
 	ComponentDrawable& getComponentDrawable(int entityID);
 	ComponentMovable& getComponentMovable(int entityID);
+	ComponentAnimation& getComponentAnimation(int entityID);
 
 	void initializeComponentsToEntity(const std::vector<ComponentType>& entityComponents, const Entity& entity);
-	void addSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message);
-	void addSystemMessage(const SystemMessage& message);
-	void sendInstantSystemMessage(const SystemMessage& message) const;
-	void update(const std::vector<Entity*>& entities);
+	void sendSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message);
+	void sendSystemMessage(const SystemMessage& message);
+	void update(float deltaTime) const;
 	void draw(const Window& window) const;
 
 private:
@@ -50,19 +51,10 @@ private:
 	std::vector<ComponentDrawable> m_drawableComponents;
 	std::vector<ComponentMovable> m_movableComponents;
 	std::vector<ComponentAnimation> m_animationComponents;
-	std::vector<SystemMessage> m_systemMessages;
-	std::vector<SystemSpecializedMessage<Vector2i>> m_systemPositionMessages;
-
-	void handleSystemMessages();
-	void handleSpecializedMessages();
 
 	template <class Component>
 	void assignEntityIDToComponent(std::vector<Component>& componentContainer, int entityID)
 	{
 		static_cast<Component>(componentContainer[entityID]).m_owningEntityID = entityID;
-		//auto iter = std::find_if(componentContainer.begin(), componentContainer.end(),
-		//	[](const auto& component) { return component.m_owningEntityID == ENTITY_NOT_IN_USE; });
-		//assert(iter != componentContainer.cend());
-		//iter->m_owningEntityID = entityID;
 	}
 };

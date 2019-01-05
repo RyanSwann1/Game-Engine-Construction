@@ -5,12 +5,12 @@
 Game::Game(Vector2i windowSize)
 	: m_window(windowSize),
 	m_stateManager(),
-	m_gameIsRunning(true)
+	m_gameIsRunning(true),
+	m_lastFrameStart(HAPI.GetTime()),
+	m_frameStart(HAPI.GetTime()),
+	m_deltaTime(0)
 {
-	TextureManager::getInstance().loadTexture("playerSprite.tga");
-
 	m_stateManager.switchToState(StateType::Game);
-	
 }
 
 bool Game::isRunning() const
@@ -20,9 +20,10 @@ bool Game::isRunning() const
 
 void Game::update()
 {
-	HAPI.Update();
-	m_stateManager.update();
+	m_frameStart = HAPI.GetTime();
+	m_gameIsRunning = HAPI.Update();
 	InputManager::getInstance().update();
+	m_stateManager.update(m_deltaTime);
 }
 
 void Game::draw()
@@ -32,26 +33,11 @@ void Game::draw()
 
 void Game::lateUpdate()
 {
-	//void gameLoop(Sprite& playerSprite, Window & window, int spriteMovementSpeed)
-	//{
-	//	auto lastFrameStart = HAPI.GetTime();
-	//	while (HAPI.Update())
-	//	{
-	//		//inputManager.registerBind('v');
-	//		const auto frameStart = HAPI.GetTime(); 
-	//		
-	//		window.clearScreenToBlack();
-	//
-	//		handleSpriteMovement(playerSprite, window.getSize(), spriteMovementSpeed);
-	//
-	//		window.blit(playerSprite);
-	//
-	//		lastFrameStart = frameStart;
-	//	}
-	//}
+	m_deltaTime = getDeltaTime();
+	m_lastFrameStart = m_frameStart;
 }
 
-float Game::getDeltaTime(DWORD lastFrameStart, DWORD frameStart) const
+float Game::getDeltaTime() const
 {
-	return static_cast<float>(frameStart - lastFrameStart) / 1000.f;
+	return static_cast<float>(m_frameStart - m_lastFrameStart) / 1000.f;
 }

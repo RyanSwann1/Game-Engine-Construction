@@ -6,6 +6,7 @@ enum class SystemType
 	Position,
 	Player,
 	Movable,
+	Animation,
 	Total,
 	Global
 };

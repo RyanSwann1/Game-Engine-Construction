@@ -5,7 +5,9 @@
 
 TextureManager::TextureManager()
 	: m_textures()
-{}
+{
+	loadTexture("playerSprite.tga");
+}
 
 void TextureManager::loadTexture(const std::string& name)
 {

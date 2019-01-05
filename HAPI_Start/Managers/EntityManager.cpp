@@ -2,6 +2,7 @@
 #include "../Components/ComponentDrawable.h"
 #include "../Components/ComponentPosition.h"
 #include "SystemManager.h"
+#include "../Systems/SystemMessage.h"
 #include <utility>
 #include <array>
 
@@ -14,7 +15,7 @@ std::unordered_map<EntityName, std::vector<ComponentType>> assignEntityFactory()
 	std::unordered_map<EntityName, std::vector<ComponentType>> entityComponents;
 
 	entityComponents.emplace(EntityName::Projectile, 
-		std::vector<ComponentType>{ ComponentType::Position, ComponentType::Drawable, ComponentType::Movable });
+		std::vector<ComponentType>{ ComponentType::Position, ComponentType::Drawable,  ComponentType::Movable });
 
 	entityComponents.emplace(EntityName::Player, 
 		std::vector<ComponentType>{ ComponentType::Drawable, ComponentType::Position, ComponentType::Movable });
@@ -79,7 +80,7 @@ void EntityManager::EntityFactory::createEntity(EntityName name)
 {
 	const Entity entity(name, m_entityCount);
 	SystemManager::getInstance().initializeComponentsToEntity(getEntityComponents(entity.m_name), entity);
-	SystemManager::getInstance().sendInstantSystemMessage(SystemMessage(entity, SystemAction::InitializeEntitySprite, SystemType::Global));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(entity.m_ID, entity.m_name, SystemAction::InitializeDrawableEntity, SystemType::Drawable));
 	m_entityPool.push_back(entity);
 
 	++m_entityCount;
@@ -88,9 +89,10 @@ void EntityManager::EntityFactory::createEntity(EntityName name)
 //EntityManager
 EntityManager::EntityManager()
 	: m_entityFactory(),
-	m_entities()
-{
-}
+	m_entitiesToAdd(),
+	m_entities(),
+	m_entitiesToRemove()
+{}
 
 const Entity & EntityManager::getEntity(int entityID) const
 {
@@ -143,8 +145,8 @@ void EntityManager::handleEntityAdditions()
 		Entity* entity = m_entityFactory.getEntity(entityToAdd.first);
 		assert(entity);
 		entity->m_inUse = true;
-		SystemManager::getInstance().addSpecializedSystemMessage(
-	SystemSpecializedMessage<Vector2i>(*entity, entityToAdd.second, SystemAction::SetStartingPosition, SystemType::Global));
+		SystemManager::getInstance().sendSpecializedSystemMessage(
+	SystemSpecializedMessage<Vector2i>(*entity, entityToAdd.second, SystemAction::SetStartingPosition, SystemType::Position));
 
 		m_entities.push_back(entity);
 	}

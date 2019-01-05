@@ -18,7 +18,7 @@ public:
 
 	StateType getType() const { return m_stateType; }
 	
-	virtual void update() = 0;
+	virtual void update(float deltaTime) = 0;
 	virtual void draw(const Window& window) const = 0;
 	
 private:

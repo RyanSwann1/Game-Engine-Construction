@@ -1,8 +1,7 @@
 #include "ComponentAnimation.h"
 #include "../Managers/EntityManager.h"
 
-ComponentAnimation::ComponentAnimation(ComponentType type)
-	: m_type(type),
-	m_owningEntityID(ENTITY_NOT_IN_USE),
+ComponentAnimation::ComponentAnimation()
+	: m_owningEntityID(ENTITY_ID_NULL),
 	m_animationPlayer()
 {}

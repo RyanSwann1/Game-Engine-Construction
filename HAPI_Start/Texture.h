@@ -12,6 +12,6 @@ public:
 	//Texture(Texture&& t);
 	~Texture();
 
-	const BYTE* m_texture;
+	BYTE* m_texture;
 	Vector2i m_size;
 };

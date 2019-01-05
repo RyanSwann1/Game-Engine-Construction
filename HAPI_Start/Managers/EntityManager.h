@@ -12,7 +12,7 @@
 #include "../Vector2i.h"
 
 constexpr size_t MAX_ENTITIES = 100;
-constexpr int ENTITY_NOT_IN_USE = -1;
+constexpr int ENTITY_ID_NULL = -1;
 constexpr int PLAYER_ID = 0;
 
 class EntityManager
@@ -59,5 +59,4 @@ private:
 	
 	void handleEntityRemovals();
 	void handleEntityAdditions();
-
 };

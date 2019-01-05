@@ -3,12 +3,13 @@
 class Timer
 {
 public:
-	Timer() {}
+	Timer();
 
-	bool isActive() const { return true; }
-	bool isExpired() const { return true; }
-	void reset() {}
-	void update() {}
-private:
+	bool isActive() const;
+	bool isExpired() const;
+	void reset();
+	void update(float deltaTime);
 
+
+	float m_time;
 };

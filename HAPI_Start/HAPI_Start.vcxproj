@@ -40,25 +40,24 @@
     <ClCompile Include="States\StateMainMenu.cpp" />
     <ClCompile Include="Managers\SystemManager.cpp" />
     <ClCompile Include="Systems\SystemAnimation.cpp" />
-    <ClCompile Include="Systems\SystemBase.cpp" />
     <ClCompile Include="Systems\SystemDrawable.cpp" />
     <ClCompile Include="Systems\SystemMovable.cpp" />
     <ClCompile Include="Systems\SystemPlayer.cpp" />
     <ClCompile Include="Systems\SystemPosition.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Allocate.h" />
     <ClInclude Include="AnimationNameConverter.h" />
     <ClInclude Include="Animation\AnimationDetails.h" />
     <ClInclude Include="Animation\AnimationName.h" />
     <ClInclude Include="Animation\AnimationPlayer.h" />
+    <ClInclude Include="Components\ComponentAnimation.h" />
     <ClInclude Include="EntityNameConverter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="NameConverter.h" />
-    <ClInclude Include="Components\ComponentAnimation.h" />
     <ClInclude Include="Components\ComponentDrawable.h" />
     <ClInclude Include="Components\ComponentMovable.h" />
     <ClInclude Include="Components\ComponentPosition.h" />

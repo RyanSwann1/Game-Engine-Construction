@@ -7,9 +7,8 @@
 class ComponentMovable
 {
 public:
-	ComponentMovable(ComponentType type);
+	ComponentMovable();
 
-	const ComponentType m_type;
 	int m_owningEntityID;
 	MoveDirection m_moveDirection;
 	Vector2i m_speed;

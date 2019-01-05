@@ -1,9 +1,8 @@
 #include "ComponentMovable.h"
 #include "../Managers/EntityManager.h"
 
-ComponentMovable::ComponentMovable(ComponentType type)
-	: m_type(type),
-	m_owningEntityID(ENTITY_NOT_IN_USE),
+ComponentMovable::ComponentMovable()
+	: m_owningEntityID(ENTITY_ID_NULL),
 	m_moveDirection(MoveDirection::None),
 	m_speed()
 {}

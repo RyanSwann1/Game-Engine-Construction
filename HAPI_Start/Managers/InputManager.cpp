@@ -15,7 +15,8 @@ InputManager::Binding::Binding(const std::function<void()>& callBack, KeyCommand
 
 //InputManager
 InputManager::InputManager()
-	:m_bindings()
+	:m_bindings(),
+	m_callBacks()
 {}
 
 void InputManager::registerBinding(const std::function<void()>& callBack, KeyCommandName name, StateType owningState, KeyBind keyBind)
@@ -36,11 +37,18 @@ void InputManager::update() const
 {
 	const HAPISPACE::HAPI_TKeyboardData& keyboardData = HAPI.GetKeyboardData();
 
+	//
+	std::vector<std::function<void()>> callBacks;
 	for (const auto& binding : m_bindings)
 	{
 		if (keyboardData.scanCode[static_cast<int>(binding.m_keyBind)])
 		{
-			binding.m_callBack();
+			callBacks.push_back(binding.m_callBack);
 		}
+	}
+
+	for (const auto& callBack : callBacks)
+	{
+		callBack();
 	}
 }

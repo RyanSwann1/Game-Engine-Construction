@@ -29,9 +29,9 @@ class StateManager
 		void registerNewState(StateManager& stateManager, StateType type)
 		{
 			assert(m_stateFactory.find(type) == m_stateFactory.cend());
-			m_stateFactory.emplace(type, [&stateManager, type]() -> std::unique_ptr<State>
+			m_stateFactory.emplace(type, [&stateManager]() -> std::unique_ptr<State>
 			{
-				return std::make_unique<State>(stateManager, type);
+				return std::make_unique<State>(stateManager);
 			});
 		}
 	};
@@ -47,7 +47,7 @@ public:
 	void switchToState(StateType type);
 	void removeState(StateType type);
 
-	void update();
+	void update(float deltaTime);
 	void draw(const Window& window) const;
 
 private:

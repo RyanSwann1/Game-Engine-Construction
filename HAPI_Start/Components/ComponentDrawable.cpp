@@ -1,8 +1,7 @@
 #include "ComponentDrawable.h"
 #include "../Managers/EntityManager.h"
 
-ComponentDrawable::ComponentDrawable(ComponentType type)
-	: m_type(type),
-	m_owningEntityID(ENTITY_NOT_IN_USE),
+ComponentDrawable::ComponentDrawable()
+	: m_owningEntityID(ENTITY_ID_NULL),
 	m_sprite()
 {}

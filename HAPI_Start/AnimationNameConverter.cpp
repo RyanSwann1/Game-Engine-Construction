@@ -8,6 +8,7 @@ std::unordered_map<std::string, AnimationName> initializeAnimationNames()
 	animationNames.emplace("WalkingDown", AnimationName::WalkingDown);
 	animationNames.emplace("WalkingLeft", AnimationName::WalkingLeft);
 	animationNames.emplace("WalkingRight", AnimationName::WalkingRight);
+	animationNames.emplace("Default", AnimationName::Default);
 
 	return animationNames;
 }
