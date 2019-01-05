@@ -12,8 +12,8 @@ void SystemAnimation::update(float deltaTime) const
 			continue;
 		}
 
-		auto& entitySprite = SystemManager::getInstance().getComponentDrawable(componentAnimation.m_owningEntityID).m_sprite;
-		componentAnimation.m_animationPlayer.update(entitySprite.getRect(), deltaTime);
+		auto& entitySprite = SystemManager::getInstance().getDrawableComponent(componentAnimation.m_owningEntityID).m_sprite;
+		componentAnimation.m_animationPlayer.update(entitySprite.m_rect, deltaTime);
 	}
 }
 
@@ -21,10 +21,17 @@ void SystemAnimation::onSystemMessage(const SystemMessage & message) const
 {
 	switch (message.m_action)
 	{
-	case SystemAction::InitializeEntityAnimations :
+	case SystemAction::LoadInEntityAnimations :
 	{
-		auto& componentAnimation = SystemManager::getInstance().getComponentAnimation(message.m_entityID);
+		auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
 		componentAnimation.m_animationPlayer.initialize(message.m_entityName);
+		break;
+	}
+	case SystemAction::InitializeEntityAnimation :
+	{
+		auto& componentDrawable = SystemManager::getInstance().getDrawableComponent(message.m_entityID);
+		auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::Default);
 		break;
 	}
 	}

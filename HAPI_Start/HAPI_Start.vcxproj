@@ -34,6 +34,7 @@
     <ClCompile Include="Managers\InputManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
     <ClCompile Include="Managers\TextureManager.cpp" />
+    <ClCompile Include="Managers\TileSheetDetailsManager.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="States\StateGame.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Systems\SystemPlayer.cpp" />
     <ClCompile Include="Systems\SystemPosition.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Tile\TileSheetDetails.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -57,6 +59,7 @@
     <ClInclude Include="Components\ComponentAnimation.h" />
     <ClInclude Include="EntityNameConverter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Managers\TileSheetDetailsManager.h" />
     <ClInclude Include="NameConverter.h" />
     <ClInclude Include="Components\ComponentDrawable.h" />
     <ClInclude Include="Components\ComponentMovable.h" />
@@ -89,6 +92,7 @@
     <ClInclude Include="Systems\SystemPosition.h" />
     <ClInclude Include="Systems\SystemType.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Tile\TileSheetDetails.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Vector2f.h" />

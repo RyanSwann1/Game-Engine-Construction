@@ -3,13 +3,14 @@
 class Timer
 {
 public:
-	Timer();
+	Timer(float expirationTime = 0);
 
 	bool isActive() const;
 	bool isExpired() const;
 	void reset();
 	void update(float deltaTime);
 
-
-	float m_time;
+private:
+	float m_elaspedTime;
+	float m_expirationTime;
 };

@@ -13,6 +13,10 @@ public:
 		m_action(action),
 		m_destination(destination)
 	{}
+	SystemMessage(const SystemMessage&) = delete;
+	SystemMessage& operator=(const SystemMessage&) = delete;
+	SystemMessage(SystemMessage&&) = delete;
+	SystemMessage&& operator=(SystemMessage&&) = delete;
 
 	const int m_entityID;
 	const EntityName m_entityName;

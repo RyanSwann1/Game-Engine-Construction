@@ -21,10 +21,16 @@ void Sprite::setTexture(const std::string & name)
 	m_texture = &TextureManager::getInstance().getTexture(name);
 }
 
-void Sprite::setRect(int x, int y, int width, int height)
-{
-	m_rect.m_width = width;
-	m_rect.m_height = height;
-	m_rect.m_x = x;
-	m_rect.m_y = y;
-}
+//void Sprite::setRect(int x, int y, int width, int height)
+//{
+//	m_rect.m_width = width;
+//	m_rect.m_height = height;
+//	m_rect.m_x = x;
+//	m_rect.m_y = y;
+//}
+//
+//void Sprite::setRectPosition(Vector2i position)
+//{
+//	m_rect.m_x = position.m_x;
+//	m_rect.m_y = position.m_y;
+//}

@@ -6,7 +6,7 @@ template <class T>
 class SystemSpecializedMessage;
 class SystemMessage;
 class Entity;
-class Vector2i;
+struct Vector2i;
 class SystemBase
 {
 public:
@@ -19,6 +19,5 @@ public:
 	
 	virtual void update(float deltaTime) const = 0;
 	virtual void onSystemMessage(const SystemMessage& message) const {}
-	virtual void onSystemSpecializedMessage(const SystemSpecializedMessage<Vector2i>& message) const {}
-
+	virtual void onSystemSpecializedMessagePosition(const SystemSpecializedMessage<Vector2i>& message) const {}
 };

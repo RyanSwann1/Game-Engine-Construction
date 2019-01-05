@@ -7,7 +7,8 @@
 
 enum class EntityName;
 class AnimationDetails;
-class Rectangle;
+class Sprite;
+class TileSheetDetails;
 class AnimationPlayer
 {
 	enum class AnimationType
@@ -19,19 +20,20 @@ class AnimationPlayer
 	class Animation
 	{
 	public:
-		Animation(const AnimationDetails& details, AnimationType type);
+		Animation(const AnimationDetails& details, const TileSheetDetails& tileSheetDetails, AnimationType type);
 
-		void update(Rectangle& spriteRect);
+		Vector2i getDrawLocationSize() const;
+		const TileSheetDetails& getTileSheetDetails() const;
 
-	protected:
+		void update(Rectangle& spriteRect, float deltaTime);
+
+	private:
 		const AnimationDetails& m_animationDetails;
+		const TileSheetDetails& m_tileSheetDetails;
 		const AnimationType m_type;
-		const int m_startFrame;
-		const int m_endFrame;
-		int m_currentID;
 		int m_currentFrame;
 		bool m_animationFinished;
-		bool m_proceedToNextFrame;
+		bool m_proceedToNextID;
 		bool m_animationPlaying;
 		bool m_reverseAnimation;
 		Timer m_frameTimer;
@@ -39,16 +41,17 @@ class AnimationPlayer
 		void reset();
 
 	private:
-		void handleBaseAnimation();
-		void updateHorizontalAnimation();
-		void updateVerticalAnimation();
+		void handleBaseAnimation(float deltaTime);
+		void updateHorizontalAnimation(float deltaTime);
+		void updateVerticalAnimation(float deltaTime);
 	};
 
 public:
 	AnimationPlayer();
 
+	void switchToAnimation(Rectangle& spriteRect, AnimationName name);
 	void initialize(EntityName entityName);
-	void update(Rectangle& spriteRect);
+	void update(Rectangle& spriteRect, float deltaTime);
 
 private:
 	std::unordered_map<AnimationName, Animation> m_animations;

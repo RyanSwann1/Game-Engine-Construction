@@ -89,7 +89,7 @@ void Window::draw(const Sprite & sprite, Vector2i position) const
 	
 	//Points to the top left of the texture
 	const BYTE* texture = sprite.getTexture().m_texture;
-	const auto& rect = sprite.getRect();
+	const auto& rect = sprite.m_rect; 
 
 	//Screen rect
 	Rectangle destinationRect(0, 0, m_windowSize.m_x, m_windowSize.m_y);

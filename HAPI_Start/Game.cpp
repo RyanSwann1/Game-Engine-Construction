@@ -10,7 +10,14 @@ Game::Game(Vector2i windowSize)
 	m_frameStart(HAPI.GetTime()),
 	m_deltaTime(0)
 {
+	TextureManager::getInstance().loadTexture("character.png");
+
 	m_stateManager.switchToState(StateType::Game);
+}
+
+Game::~Game()
+{
+	TextureManager::getInstance().unloadTexture("character.png");
 }
 
 bool Game::isRunning() const

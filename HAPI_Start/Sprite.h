@@ -13,11 +13,10 @@ public:
 
 	const Texture& getTexture() const;
 	void setTexture(const std::string& name);
-	void setTexture(Texture& texture) { m_texture = &texture; }
-	void setRect(int x, int y, int width, int height);
-	Rectangle getRect() const { return m_rect; }
+
+	Rectangle m_rect;
 
 private:
 	const Texture* m_texture;
-	Rectangle m_rect;
+	
 };

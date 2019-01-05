@@ -2,15 +2,12 @@
 #include <algorithm>
 #include <iostream>
 
-
 Rectangle::Rectangle(int x, int y, int width, int height)
 	: m_x(x),
 	m_y(y),
 	m_width(width),
 	m_height(height)
-{
-}
-
+{}
 
 int Rectangle::getWidth() const
 {

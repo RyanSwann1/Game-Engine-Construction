@@ -31,6 +31,7 @@ std::unordered_map<EntityName, std::vector<AnimationDetails>> initializeAnimatio
 		keyStream >> entityName >> textureName >> animationName >> direction >> startID >> endID >> frameTime
 			>> repeatable >> drawLocationSize.m_x >> drawLocationSize.m_y >> reversible;
 
+		//Convert data
 		const EntityName convertedEntityName = EntityNameConverter::getInstance().getConvertedName(entityName);
 		const AnimationName convertedAnimationName = AnimationNameConverter::getInstance().getConvertedName(animationName);
 

@@ -1,9 +1,9 @@
 #include "Timer.h"
 
-Timer::Timer()
-	: m_time(0)
-{
-}
+Timer::Timer(float expirationTime)
+	: m_elaspedTime(0),
+	m_expirationTime(expirationTime)
+{}
 
 bool Timer::isActive() const
 {
@@ -12,15 +12,15 @@ bool Timer::isActive() const
 
 bool Timer::isExpired() const
 {
-	return false;
+	return (m_elaspedTime >= m_expirationTime);
 }
 
 void Timer::reset()
 {
-	m_time = 0;
+	m_elaspedTime = 0;
 }
 
 void Timer::update(float deltaTime)
 {
-	m_time += deltaTime;
+	m_elaspedTime += deltaTime;
 }

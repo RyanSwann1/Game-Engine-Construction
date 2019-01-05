@@ -4,8 +4,9 @@
 StateGame::StateGame(StateManager & stateManager)
 	: StateBase(stateManager, StateType::Game)
 {
-	m_entityManager.addEntity(EntityName::Player, Vector2i(50, 50));
+	m_entityManager.addEntity(EntityName::Player, Vector2i(100, 100));
 }
+
 
 void StateGame::update(float deltaTime)
 {

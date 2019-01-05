@@ -12,5 +12,5 @@ public:
 	SystemPosition&& operator=(SystemPosition&&) = delete;
 
 	void update(float deltaTime) const override {}
-	void onSystemSpecializedMessage(const SystemSpecializedMessage<Vector2i>& message) const override;
+	void onSystemSpecializedMessagePosition(const SystemSpecializedMessage<Vector2i>& message) const override;
 };

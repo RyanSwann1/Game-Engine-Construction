@@ -16,8 +16,8 @@ public:
 	const AnimationName m_name;
 	const std::string m_textureName;
 	const std::string m_direction;
-	const int m_startID;
-	const int m_endID;
+	const int m_startFrame;
+	const int m_endFrame;
 	const float m_frameTime;
 	const bool m_repeatable;
 	const bool m_reversible;

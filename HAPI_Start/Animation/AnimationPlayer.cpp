@@ -3,130 +3,164 @@
 #include "AnimationDetails.h"
 #include "../Window.h"
 #include "../Managers/TextureManager.h"
+#include "../Managers/TileSheetDetailsManager.h"
 #include <assert.h>
 
 //Animation
-AnimationPlayer::Animation::Animation(const AnimationDetails & details, AnimationType type)
+AnimationPlayer::Animation::Animation(const AnimationDetails & details, const TileSheetDetails& tileSheetDetails, AnimationType type)
 	: m_animationDetails(details),
+	m_tileSheetDetails(tileSheetDetails),
 	m_type(type),
-	m_startFrame(0),
-	m_endFrame(m_animationDetails.m_endID - m_animationDetails.m_startID),
-	m_currentID(0),
-	m_currentFrame(0),
+	m_currentFrame(details.m_startFrame),
 	m_animationFinished(false),
-	m_proceedToNextFrame(false),
+	m_proceedToNextID(false),
 	m_animationPlaying(false),
 	m_reverseAnimation(false),
-	m_frameTimer()
+	m_frameTimer(details.m_frameTime)
 {}
 
-void AnimationPlayer::Animation::update(Rectangle& spriteRect)
+Vector2i AnimationPlayer::Animation::getDrawLocationSize() const
 {
-	handleBaseAnimation();
-
-	switch (m_type)
-	{
-	case AnimationType::Horizontal :
-	{
-		updateHorizontalAnimation();
-		break;
-	}
-	case AnimationType::Vertical :
-	{
-		updateVerticalAnimation();
-		break;
-	}
-	}
+	return m_animationDetails.m_drawLocationSize;
 }
 
-void AnimationPlayer::Animation::reset()
+const TileSheetDetails & AnimationPlayer::Animation::getTileSheetDetails() const
 {
-	m_animationFinished = false;
-	m_proceedToNextFrame = false;
-	m_animationPlaying = m_animationDetails.m_repeatable;
-	if (m_animationPlaying)
-	{
-		m_currentFrame = m_startFrame;
-	}
-	m_frameTimer.reset();
+	return m_tileSheetDetails;
 }
 
-void AnimationPlayer::Animation::handleBaseAnimation()
-{
-	if (!m_animationPlaying)
-	{
-		return;
-	}
+//https://www.youtube.com/watch?v=qfoiUU76Ewg
 
-	if (!m_frameTimer.isActive())
+void AnimationPlayer::Animation::update(Rectangle & spriteRect, float deltaTime)
+{
+	if (m_animationDetails.m_startFrame == m_animationDetails.m_endFrame)
 	{
-		return;
+		spriteRect.m_y = (m_currentFrame / m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
+		spriteRect.m_x = (m_currentFrame % m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
 	}
 
 	//m_frameTimer.update(deltaTime);
-	if (!m_frameTimer.isExpired())
-	{
-		return;
-	}
-
-	if (m_currentFrame == m_endFrame)
-	{
-		if (m_animationDetails.m_reversible)
-		{
-			m_reverseAnimation = true;
-		}
-		else
-		{
-			reset();
-			return;
-		}
-	}
-
-	if (m_reverseAnimation && m_currentFrame == m_startFrame)
-	{
-		reset();
-		return;
-	}
-
-	m_proceedToNextFrame = true;
-	m_frameTimer.reset();
+	//if (m_frameTimer.isExpired())
+	//{
+	//	if (m_currentFrame < m_details.m_endFrame)
+	//	{
+	//		++m_currentFrame;
+	//	}
+	//	else
+	//	{
+	//		m_currentFrame = m_details.m_startFrame;
+	//	}
+	//	
+	//	//Current frame 
+	//	m_frameTimer.reset();
+	//	int i = 0;
+	//	
+	//	
+	//}
 }
 
-void AnimationPlayer::Animation::updateHorizontalAnimation()
-{
-		if (!m_proceedToNextFrame)
-		{
-			return;
-		}
-		m_proceedToNextFrame = false;
+//void AnimationPlayer::Animation::update(Rectangle& spriteRect, float deltaTime)
+//{
+//	handleBaseAnimation(deltaTime);
+//
+//	switch (m_type)
+//	{
+//	case AnimationType::Horizontal :
+//	{
+//		updateHorizontalAnimation(deltaTime);
+//		break;
+//	}
+//	case AnimationType::Vertical :
+//	{
+//		updateVerticalAnimation(deltaTime);
+//		break;
+//	}
+//	}
+//}
 
-		if (m_reverseAnimation)
-		{
-			if (m_currentFrame > m_startFrame)
-			{
-				--m_currentFrame;
-			}
-			else if (m_currentFrame < m_startFrame)
-			{
-				++m_currentFrame;
-			}
-		}
-		else
-		{
-			if (m_currentFrame > m_endFrame)
-			{
-				--m_currentFrame;
-			}
-			else if (m_currentFrame < m_endFrame)
-			{
-				++m_currentFrame;
-			}
-		}
+void AnimationPlayer::Animation::reset()
+{
+}
+//	m_animationFinished = false;
+//	m_proceedToNextID = false;
+//	m_animationPlaying = m_details.m_repeatable;
+//	if (m_animationPlaying)
+//	{
+//		m_currentFrame = m_startFrame;
+//	}
+//	m_frameTimer.reset();
+//}
+
+void AnimationPlayer::Animation::handleBaseAnimation(float deltaTime)
+{
+	//if (!m_animationPlaying || !m_frameTimer.isActive())
+	//{
+	//	return;
+	//}
+
+	//m_frameTimer.update(deltaTime);
+	//if (!m_frameTimer.isExpired())
+	//{
+	//	return;
+	//}
+
+	//if (m_currentFrame == m_endFrame)
+	//{
+	//	if (m_details.m_reversible)
+	//	{
+	//		m_reverseAnimation = true;
+	//	}
+	//	else
+	//	{
+	//		reset();
+	//		return;
+	//	}
+	//}
+
+	//if (m_reverseAnimation && m_currentFrame == m_startFrame)
+	//{
+	//	reset();
+	//	return;
+	//}
+
+	//m_proceedToNextID = true;
+	//m_frameTimer.reset();
 }
 
-void AnimationPlayer::Animation::updateVerticalAnimation()
+void AnimationPlayer::Animation::updateHorizontalAnimation(float deltaTime)
 {
-	if (!m_proceedToNextFrame)
+		//if (!m_proceedToNextID)
+		//{
+		//	return;
+		//}
+		//m_proceedToNextID = false;
+		//if (m_reverseAnimation)
+		//{
+		//	if (m_currentFrame > m_startFrame)
+		//	{
+		//		--m_currentFrame;
+		//	}
+		//	else if (m_currentFrame < m_startFrame)
+		//	{
+		//		++m_currentFrame;
+		//	}
+		//}
+		//else
+		//{
+		//	if (m_currentFrame > m_endFrame)
+		//	{
+		//		--m_currentFrame;
+		//	}
+		//	else if (m_currentFrame < m_endFrame)
+		//	{
+		//		++m_currentFrame;
+		//	}
+		//}
+}
+
+void AnimationPlayer::Animation::updateVerticalAnimation(float deltaTime)
+{
+	if (!m_proceedToNextID)
 	{
 		return;
 	}
@@ -165,32 +199,39 @@ AnimationPlayer::AnimationPlayer()
 {
 }
 
+void AnimationPlayer::switchToAnimation(Rectangle & spriteRect, AnimationName name)
+{
+	auto iter = m_animations.find(name);
+	assert(iter != m_animations.cend());
+	m_currentAnimation = &iter->second;
+
+	//Assign sprite rect to the current animation drawing size.
+	//Multiple animations can have different drawing sizes
+	const int tileSize = m_currentAnimation->getTileSheetDetails().m_tileSize;
+	spriteRect.m_width = m_currentAnimation->getDrawLocationSize().m_x * tileSize;
+	spriteRect.m_height = m_currentAnimation->getDrawLocationSize().m_y * tileSize;
+	int i = 0;
+}
+
 void AnimationPlayer::initialize(EntityName entityName)
 {
 	const auto& entityAnimations = EntityAnimations::getInstance().getAllEntityAnimations(entityName);
 	for (const AnimationDetails& animationDetails : entityAnimations)
 	{
+		const auto& tileSheetDetails = TileSheetDetailsManager::getInstance().getTileSheetDetails(animationDetails.m_textureName);
 		if (animationDetails.m_direction == "Horizontal")
 		{
-			m_animations.emplace(animationDetails.m_name, Animation(animationDetails, AnimationType::Horizontal));
+			m_animations.emplace(animationDetails.m_name, Animation(animationDetails, tileSheetDetails, AnimationType::Horizontal));
 		}
 		else if (animationDetails.m_direction == "Vertical")
 		{
-			m_animations.emplace(animationDetails.m_name, Animation(animationDetails, AnimationType::Vertical));
+			m_animations.emplace(animationDetails.m_name, Animation(animationDetails, tileSheetDetails, AnimationType::Vertical));
 		}
 	}
-
-	auto iter = m_animations.find(AnimationName::Default);
-	assert(iter != m_animations.cend());
-	m_currentAnimation = &iter->second;
 }
 
-void AnimationPlayer::update(Rectangle& spriteRect)
+void AnimationPlayer::update(Rectangle& spriteRect, float deltaTime)
 {
-	if (m_currentAnimation)
-	{
-		return;
-	}
-
-	m_currentAnimation->update(spriteRect);
+	assert(m_currentAnimation);
+	m_currentAnimation->update(spriteRect, deltaTime);
 }

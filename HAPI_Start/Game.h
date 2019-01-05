@@ -7,6 +7,7 @@ class Game
 {
 public:
 	Game(Vector2i windowSize);
+	~Game();
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	Game(Game&&) = delete;

@@ -43,7 +43,7 @@ void SystemMovable::update(float deltaTime) const
 
 void SystemMovable::onSystemMessage(const SystemMessage& message) const
 {
-	auto& entityMoveDirection = SystemManager::getInstance().getComponentMovable(message.m_entityID).m_moveDirection;
+	auto& entityMoveDirection = SystemManager::getInstance().getMovableComponent(message.m_entityID).m_moveDirection;
 	switch (message.m_action)
 	{
 	case SystemAction::MoveEntityLeft :
@@ -71,6 +71,6 @@ void SystemMovable::onSystemMessage(const SystemMessage& message) const
 
 void SystemMovable::moveEntity(int entityID, Vector2i moveBy) const
 {
-	auto& componentPosition = SystemManager::getInstance().getComponentPosition(entityID);
+	auto& componentPosition = SystemManager::getInstance().getPositionComponent(entityID);
 	componentPosition.m_position += moveBy;
 } 

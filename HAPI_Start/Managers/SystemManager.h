@@ -33,10 +33,10 @@ public:
 	std::vector<ComponentMovable>& getAllMovableComponents();
 	std::vector<ComponentAnimation>& getAllAnimationComponents();
 
-	ComponentPosition& getComponentPosition(int entityID);
-	ComponentDrawable& getComponentDrawable(int entityID);
-	ComponentMovable& getComponentMovable(int entityID);
-	ComponentAnimation& getComponentAnimation(int entityID);
+	ComponentPosition& getPositionComponent(int entityID);
+	ComponentDrawable& getDrawableComponent(int entityID);
+	ComponentMovable& getMovableComponent(int entityID);
+	ComponentAnimation& getAnimationComponent(int entityID);
 
 	void initializeComponentsToEntity(const std::vector<ComponentType>& entityComponents, const Entity& entity);
 	void sendSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message);

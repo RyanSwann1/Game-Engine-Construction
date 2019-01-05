@@ -79,11 +79,14 @@ const std::vector<ComponentType>& EntityManager::EntityFactory::getEntityCompone
 void EntityManager::EntityFactory::createEntity(EntityName name)
 {
 	const Entity entity(name, m_entityCount);
+
 	SystemManager::getInstance().initializeComponentsToEntity(getEntityComponents(entity.m_name), entity);
 	SystemManager::getInstance().sendSystemMessage(
-		SystemMessage(entity.m_ID, entity.m_name, SystemAction::InitializeEntityAnimations, SystemType::Animation));
-	m_entityPool.push_back(entity);
+		SystemMessage(entity.m_ID, entity.m_name, SystemAction::LoadInEntityAnimations, SystemType::Animation));
+	SystemManager::getInstance().sendSystemMessage(
+		SystemMessage(entity.m_ID, entity.m_name, SystemAction::InitializeEntityTexture, SystemType::Drawable));
 
+	m_entityPool.push_back(entity);
 	++m_entityCount;
 }
 
@@ -148,6 +151,8 @@ void EntityManager::handleEntityAdditions()
 		entity->m_inUse = true;
 		SystemManager::getInstance().sendSpecializedSystemMessage(
 	SystemSpecializedMessage<Vector2i>(*entity, entityToAdd.second, SystemAction::SetStartingPosition, SystemType::Position));
+		SystemManager::getInstance().sendSystemMessage(
+			SystemMessage(entity->m_ID, entity->m_name, SystemAction::InitializeEntityAnimation, SystemType::Animation));
 
 		m_entities.push_back(entity);
 	}

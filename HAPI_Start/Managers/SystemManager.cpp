@@ -69,12 +69,12 @@ void SystemManager::sendSpecializedSystemMessage(const SystemSpecializedMessage<
 	{
 		for (const auto& system : m_systems)
 		{
-			system->onSystemSpecializedMessage(message);
+			system->onSystemSpecializedMessagePosition(message);
 		}
 	}
 	else
 	{
-		m_systems[static_cast<int>(message.m_destination)]->onSystemSpecializedMessage(message);
+		m_systems[static_cast<int>(message.m_destination)]->onSystemSpecializedMessagePosition(message);
 	}
 }
 
@@ -93,25 +93,25 @@ void SystemManager::sendSystemMessage(const SystemMessage & message)
 	}
 }
 
-ComponentPosition & SystemManager::getComponentPosition(int entityID)
+ComponentPosition & SystemManager::getPositionComponent(int entityID)
 {
 	assert(entityID == m_positionComponents[entityID].m_owningEntityID);
 	return m_positionComponents[entityID];
 }
 
-ComponentDrawable & SystemManager::getComponentDrawable(int entityID)
+ComponentDrawable & SystemManager::getDrawableComponent(int entityID)
 {
 	assert(entityID == m_drawableComponents[entityID].m_owningEntityID);
 	return m_drawableComponents[entityID];
 }
 
-ComponentMovable & SystemManager::getComponentMovable(int entityID)
+ComponentMovable & SystemManager::getMovableComponent(int entityID)
 {
 	assert(entityID == m_movableComponents[entityID].m_owningEntityID);
 	return m_movableComponents[entityID];
 }
 
-ComponentAnimation & SystemManager::getComponentAnimation(int entityID)
+ComponentAnimation & SystemManager::getAnimationComponent(int entityID)
 {
 	assert(entityID == m_animationComponents[entityID].m_owningEntityID);
 	return m_animationComponents[entityID];
