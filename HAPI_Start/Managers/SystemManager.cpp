@@ -65,7 +65,17 @@ void SystemManager::initializeComponentsToEntity(const std::vector<ComponentType
 
 void SystemManager::sendSpecializedSystemMessage(const SystemSpecializedMessage<Vector2i>& message)
 {
-
+	if (message.m_destination == SystemType::Global)
+	{
+		for (const auto& system : m_systems)
+		{
+			system->onSystemSpecializedMessage(message);
+		}
+	}
+	else
+	{
+		m_systems[static_cast<int>(message.m_destination)]->onSystemSpecializedMessage(message);
+	}
 }
 
 void SystemManager::sendSystemMessage(const SystemMessage & message)
