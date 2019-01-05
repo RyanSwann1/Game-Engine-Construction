@@ -33,30 +33,29 @@ const TileSheetDetails & AnimationPlayer::Animation::getTileSheetDetails() const
 
 void AnimationPlayer::Animation::update(Rectangle & spriteRect, float deltaTime)
 {
-	if (m_animationDetails.m_startFrame == m_animationDetails.m_endFrame)
+	//Non idle animation
+	if (m_animationDetails.m_startFrame != m_animationDetails.m_endFrame)
 	{
-		spriteRect.m_y = (m_currentFrame / m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
-		spriteRect.m_x = (m_currentFrame % m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
+		m_frameTimer.update(deltaTime);
+		if (m_frameTimer.isExpired())
+		{
+			if (m_currentFrame < m_animationDetails.m_endFrame)
+			{
+				++m_currentFrame;
+			}
+			else
+			{
+				m_currentFrame = m_animationDetails.m_startFrame;
+			}
+
+			//Current frame 
+			m_frameTimer.reset();
+			int i = 0;
+		}
 	}
 
-	//m_frameTimer.update(deltaTime);
-	//if (m_frameTimer.isExpired())
-	//{
-	//	if (m_currentFrame < m_details.m_endFrame)
-	//	{
-	//		++m_currentFrame;
-	//	}
-	//	else
-	//	{
-	//		m_currentFrame = m_details.m_startFrame;
-	//	}
-	//	
-	//	//Current frame 
-	//	m_frameTimer.reset();
-	//	int i = 0;
-	//	
-	//	
-	//}
+	spriteRect.m_y = (m_currentFrame / m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
+	spriteRect.m_x = (m_currentFrame % m_tileSheetDetails.m_columns) * m_tileSheetDetails.m_tileSize;
 }
 
 //void AnimationPlayer::Animation::update(Rectangle& spriteRect, float deltaTime)

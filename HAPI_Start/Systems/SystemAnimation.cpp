@@ -31,7 +31,7 @@ void SystemAnimation::onSystemMessage(const SystemMessage & message) const
 	{
 		auto& componentDrawable = SystemManager::getInstance().getDrawableComponent(message.m_entityID);
 		auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
-		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::Default);
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::WalkingDown);
 		break;
 	}
 	}
