@@ -13,4 +13,5 @@ public:
 	SystemAnimation&& operator=(SystemAnimation&&) = delete;
 
 	void update(float deltaTime) const override;
+	void onSystemMessage(const SystemMessage& message) const override;
 };
