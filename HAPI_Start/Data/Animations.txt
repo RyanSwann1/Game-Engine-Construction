@@ -1,3 +1,6 @@
 |EntityName|SpriteSheet|Name|Direction|StartID|EndID|FrameTime|Repeatable|DrawLocationSize.x|DrawLocationSize.y|Reversible|
 Player character.png Default Horizontal 0 0 0.0 1 1 2 0
-Player character.png WalkingDown Horizontal 0 3 0.5 1 1 2 0
+Player character.png WalkingDown Horizontal 0 3 0.25 1 1 2 0
+Player character.png WalkingLeft Horizontal 102 105 0.25 1 1 2 0
+Player character.png WalkingRight Horizontal 34 37 0.25 1 1 2 0
+Player character.png WalkingUp Horizontal 68 71 0.25 1 1 2 0

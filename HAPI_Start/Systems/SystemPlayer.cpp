@@ -30,19 +30,23 @@ SystemPlayer::~SystemPlayer()
 void SystemPlayer::playerMoveLeft() const
 {
 	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityLeft, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityLeft, SystemType::Animation));
 }
 
 void SystemPlayer::playerMoveRight() const
 {
 	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityRight, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityRight, SystemType::Animation));
 }
 
 void SystemPlayer::playerMoveUp() const
 {
 	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityUp, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityUp, SystemType::Animation));
 }
 
 void SystemPlayer::playerMoveDown() const
 {
 	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityDown, SystemType::Movable));
+	SystemManager::getInstance().sendSystemMessage(SystemMessage(PLAYER_ID, EntityName::Player, SystemAction::MoveEntityDown, SystemType::Animation));
 }

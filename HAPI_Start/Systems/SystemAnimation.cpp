@@ -19,18 +19,37 @@ void SystemAnimation::update(float deltaTime) const
 
 void SystemAnimation::onSystemMessage(const SystemMessage & message) const
 {
+	auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
+	auto& componentDrawable = SystemManager::getInstance().getDrawableComponent(message.m_entityID);
 	switch (message.m_action)
 	{
 	case SystemAction::LoadInEntityAnimations :
 	{
-		auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
 		componentAnimation.m_animationPlayer.initialize(message.m_entityName);
 		break;
 	}
 	case SystemAction::InitializeEntityAnimation :
 	{
-		auto& componentDrawable = SystemManager::getInstance().getDrawableComponent(message.m_entityID);
-		auto& componentAnimation = SystemManager::getInstance().getAnimationComponent(message.m_entityID);
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::Default);
+		break;
+	}
+	case SystemAction::MoveEntityLeft :
+	{
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::WalkingLeft);
+		break;
+	}
+	case SystemAction::MoveEntityRight :
+	{
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::WalkingRight);
+		break;
+	}
+	case SystemAction::MoveEntityUp :
+	{
+		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::WalkingUp);
+		break;
+	}
+	case SystemAction::MoveEntityDown :
+	{
 		componentAnimation.m_animationPlayer.switchToAnimation(componentDrawable.m_sprite.m_rect, AnimationName::WalkingDown);
 		break;
 	}

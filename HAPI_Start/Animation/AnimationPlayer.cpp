@@ -29,8 +29,6 @@ const TileSheetDetails & AnimationPlayer::Animation::getTileSheetDetails() const
 	return m_tileSheetDetails;
 }
 
-//https://www.youtube.com/watch?v=qfoiUU76Ewg
-
 void AnimationPlayer::Animation::update(Rectangle & spriteRect, float deltaTime)
 {
 	//Non idle animation

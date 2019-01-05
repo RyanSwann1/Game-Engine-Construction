@@ -43,30 +43,30 @@ void SystemMovable::update(float deltaTime) const
 
 void SystemMovable::onSystemMessage(const SystemMessage& message) const
 {
-	auto& entityMoveDirection = SystemManager::getInstance().getMovableComponent(message.m_entityID).m_moveDirection;
-	switch (message.m_action)
-	{
-	case SystemAction::MoveEntityLeft :
-	{
-		entityMoveDirection = MoveDirection::Left;
-		break;
-	}
-	case SystemAction::MoveEntityRight :
-	{
-		entityMoveDirection = MoveDirection::Right;
-		break;
-	}
-	case SystemAction::MoveEntityUp :
-	{
-		entityMoveDirection = MoveDirection::Up;
-		break;
-	}
-	case SystemAction::MoveEntityDown :
-	{
-		entityMoveDirection = MoveDirection::Down;
-		break;
-	}
-	}
+	//auto& entityMoveDirection = SystemManager::getInstance().getMovableComponent(message.m_entityID).m_moveDirection;
+	//switch (message.m_action)
+	//{
+	//case SystemAction::MoveEntityLeft :
+	//{
+	//	entityMoveDirection = MoveDirection::Left;
+	//	break;
+	//}
+	//case SystemAction::MoveEntityRight :
+	//{
+	//	entityMoveDirection = MoveDirection::Right;
+	//	break;
+	//}
+	//case SystemAction::MoveEntityUp :
+	//{
+	//	entityMoveDirection = MoveDirection::Up;
+	//	break;
+	//}
+	//case SystemAction::MoveEntityDown :
+	//{
+	//	entityMoveDirection = MoveDirection::Down;
+	//	break;
+	//}
+	//}
 }
 
 void SystemMovable::moveEntity(int entityID, Vector2i moveBy) const
