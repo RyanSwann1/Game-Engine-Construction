@@ -46,9 +46,7 @@ void AnimationPlayer::Animation::update(Rectangle & spriteRect, float deltaTime)
 				m_currentFrame = m_animationDetails.m_startFrame;
 			}
 
-			//Current frame 
 			m_frameTimer.reset();
-			int i = 0;
 		}
 	}
 

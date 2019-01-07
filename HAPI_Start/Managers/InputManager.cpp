@@ -21,8 +21,6 @@ InputManager::InputManager()
 
 void InputManager::registerBinding(const std::function<void()>& callBack, KeyCommandName name, StateType owningState, KeyBind keyBind)
 {
-	//Check to make sure binding doesn't already exist
-
 	m_bindings.emplace_back(callBack, name, owningState, keyBind);
 }
 
@@ -36,8 +34,6 @@ void InputManager::unregisterBinding(KeyCommandName name)
 void InputManager::update() const
 {
 	const HAPISPACE::HAPI_TKeyboardData& keyboardData = HAPI.GetKeyboardData();
-
-	//
 	std::vector<std::function<void()>> callBacks;
 	for (const auto& binding : m_bindings)
 	{

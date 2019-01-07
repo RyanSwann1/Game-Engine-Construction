@@ -32,6 +32,7 @@
     <ClCompile Include="Managers\EntityAnimations.cpp" />
     <ClCompile Include="Managers\EntityManager.cpp" />
     <ClCompile Include="Managers\InputManager.cpp" />
+    <ClCompile Include="Managers\LevelManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
     <ClCompile Include="Managers\TextureManager.cpp" />
     <ClCompile Include="Managers\TileSheetDetailsManager.cpp" />
@@ -46,9 +47,17 @@
     <ClCompile Include="Systems\SystemPlayer.cpp" />
     <ClCompile Include="Systems\SystemPosition.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="LevelParser.cpp" />
+    <ClCompile Include="Tile\Level.cpp" />
+    <ClCompile Include="Tile\Tile.cpp" />
+    <ClCompile Include="Tile\TileLayer.cpp" />
     <ClCompile Include="Tile\TileSheetDetails.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="Utilities\Base64.cpp" />
+    <ClCompile Include="Utilities\tinyxml.cpp" />
+    <ClCompile Include="Utilities\tinyxmlerror.cpp" />
+    <ClCompile Include="Utilities\tinyxmlparser.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +68,7 @@
     <ClInclude Include="Components\ComponentAnimation.h" />
     <ClInclude Include="EntityNameConverter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Managers\LevelManager.h" />
     <ClInclude Include="Managers\TileSheetDetailsManager.h" />
     <ClInclude Include="NameConverter.h" />
     <ClInclude Include="Components\ComponentDrawable.h" />
@@ -92,9 +102,15 @@
     <ClInclude Include="Systems\SystemPosition.h" />
     <ClInclude Include="Systems\SystemType.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="LevelParser.h" />
+    <ClInclude Include="Tile\Level.h" />
+    <ClInclude Include="Tile\Tile.h" />
+    <ClInclude Include="Tile\TileLayer.h" />
     <ClInclude Include="Tile\TileSheetDetails.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Utilities\Base64.h" />
+    <ClInclude Include="Utilities\tinyxml.h" />
     <ClInclude Include="Vector2f.h" />
     <ClInclude Include="Vector2i.h" />
     <ClInclude Include="Vector3f.h" />
@@ -185,7 +201,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>TIXML_USE_STL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>HAPI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

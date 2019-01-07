@@ -11,6 +11,7 @@ Game::Game(Vector2i windowSize)
 	m_deltaTime(0)
 {
 	TextureManager::getInstance().loadTexture("character.png");
+	TextureManager::getInstance().loadTexture("Overworld.png");
 
 	m_stateManager.switchToState(StateType::Game);
 }

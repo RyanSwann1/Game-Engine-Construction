@@ -10,6 +10,11 @@ Sprite::Sprite()
 	m_rect()
 {}
 
+Sprite::Sprite(int rectWidth, int rectHeight)
+	: m_texture(nullptr),
+	m_rect(0, 0, rectWidth, rectHeight)
+{}
+
 const Texture & Sprite::getTexture() const
 {
 	assert(m_texture);
@@ -19,6 +24,7 @@ const Texture & Sprite::getTexture() const
 void Sprite::setTexture(const std::string & name)
 {
 	m_texture = &TextureManager::getInstance().getTexture(name);
+
 }
 
 //void Sprite::setRect(int x, int y, int width, int height)

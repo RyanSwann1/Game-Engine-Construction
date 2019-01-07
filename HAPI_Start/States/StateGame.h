@@ -3,6 +3,7 @@
 
 #include "StateBase.h"
 #include "../Managers/EntityManager.h"
+#include "../Managers/LevelManager.h"
 
 class StateGame : public StateBase
 {
@@ -18,4 +19,5 @@ public:
 
 private:
 	EntityManager m_entityManager;
+	LevelManager m_levelManager;
 };

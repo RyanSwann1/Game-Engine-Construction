@@ -37,7 +37,7 @@ EntityManager::EntityFactory::EntityFactory()
 	//load in player(s)
 	for (int i = 0; i < TOTAL_PLAYER; ++i)
 	{
-		createEntity(EntityName::Player);
+		//createEntity(EntityName::Player);
 	}
 
 	////Load in projectiles

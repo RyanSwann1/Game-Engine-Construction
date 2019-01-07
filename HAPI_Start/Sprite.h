@@ -10,6 +10,7 @@ class Sprite
 {
 public:
 	Sprite();
+	Sprite(int rectWidth, int rectHeight);
 
 	const Texture& getTexture() const;
 	void setTexture(const std::string& name);
